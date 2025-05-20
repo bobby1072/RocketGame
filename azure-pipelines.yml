@@ -1,0 +1,50 @@
+trigger:
+  branches:
+    include:
+      - master
+
+pr:
+  branches:
+    include:
+      - "master"
+      - "feature/*"
+      - "hotfix/*"
+      - "bugfix/*"
+
+pool:
+  vmImage: "ubuntu-latest"
+
+
+stages:
+  - stage: Build
+    jobs:
+      - job: build_phaser_frontend
+        displayName: "Build phaser frontend"
+        variables:
+          - name: version
+            value: $(Build.BuildNumber)
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: 22.x
+
+          - task: Npm@1
+            displayName: "NPM install"
+            inputs:
+              command: "custom"
+              customCommand: "ci"
+              workingDir: $(Build.SourcesDirectory)/src/phaser-client
+
+          - task: Npm@1
+            displayName: "Check types"
+            inputs:
+              commands: "custom"
+              customCommand: "run check-types"
+              workingDir: $(Build.SourcesDirectory)/src/phaser-client
+
+          - task: Npm@1
+            displayName: "Build"
+            inputs:
+              command: "custom"
+              customCommand: "run build"
+              workingDir: $(Build.SourcesDirectory)/src/phaser-client
