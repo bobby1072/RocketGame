@@ -29,12 +29,12 @@
     "dependencies": {
         "phaser": "3.90.0",
         "react": "19.1.0",
-        "react-dom": "19.0.0"
+        "react-dom": "19.1.0"
     },
     "devDependencies": {
         "@eslint/js": "9.27.0",
         "@types/react": "19.1.5",
-        "@types/react-dom": "19.0.4",
+        "@types/react-dom": "19.1.5",
         "@vitejs/plugin-react": "4.5.0",
         "eslint": "9.27.0",
         "eslint-plugin-react-hooks": "5.2.0",
