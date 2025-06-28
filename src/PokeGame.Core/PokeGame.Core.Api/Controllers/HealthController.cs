@@ -31,6 +31,8 @@ public sealed class HealthController: ControllerBase
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "An exception occurred during the health route with message: {Message}", ex.Message);
+            
             return Task.FromResult(
                 (ActionResult<WebOutcome<ServiceInfo>>)
                     new WebOutcome<ServiceInfo>
