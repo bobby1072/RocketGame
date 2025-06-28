@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using PokeGame.Core.Common.Configurations;
 using PokeGame.Core.Common.Extensions;
+using PokeGame.Core.Common.Services.Extensions;
 
 namespace PokeGame.Core.Domain.Services.Extensions;
 
@@ -19,7 +20,8 @@ public static class DomainServicesServiceCollectionExtensions
         services
             .ConfigureSingletonOptions<ServiceInfo>(serviceInfoSection)
             .AddHttpClient()
-            .AddLogging();
+            .AddLogging()
+            .AddCommonServices();
         
 
         return services;
