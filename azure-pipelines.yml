@@ -18,6 +18,25 @@ pool:
 stages:
   - stage: Build
     jobs:
+      - job: build_backend
+        displayName: "Build web api"
+        steps:
+          - checkout: self
+            submodules: recursive
+
+          - task: UseDotNet@2
+            displayName: "Install .NET SDK"
+            inputs:
+              packageType: "sdk"
+              version: "9.0.x"
+
+          - task: DotNetCoreCLI@2
+            displayName: "Run .NET Unit Tests"
+            inputs:
+              command: "test"
+              projects: "src/PokeGame.Core/PokeGame.Core.sln"
+              arguments: "-c Release"
+
       - job: build_phaser_frontend
         displayName: "Build phaser frontend"
         variables:
