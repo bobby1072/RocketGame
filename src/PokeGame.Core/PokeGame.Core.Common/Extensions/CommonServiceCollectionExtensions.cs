@@ -10,8 +10,17 @@ public static class CommonServiceCollectionExtensions
         IConfiguration configSection) where TOptions : class
     {
         services
-            .ConfigureSingletonOptions<TOptions>(configSection)
+            .Configure<TOptions>(configSection)
             .AddSingleton<TOptions>(sp => sp.GetRequiredService<IOptions<TOptions>>().Value);
+
+        return services;
+    }
+    public static IServiceCollection ConfigureScopedOptions<TOptions>(this IServiceCollection services,
+        IConfiguration configSection) where TOptions : class
+    {
+        services
+            .Configure<TOptions>(configSection)
+            .AddScoped<TOptions>(sp => sp.GetRequiredService<IOptionsSnapshot<TOptions>>().Value);
 
         return services;
     }
