@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeGame.Core.Persistence",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeGame.Core.Persistence.Entities", "PokeGame.Core.Persistence.Entities\PokeGame.Core.Persistence.Entities.csproj", "{098EB28F-7DE8-4C77-AB47-7331A46783C6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Submodules", "Submodules", "{7870B4D1-9D51-4166-AE81-C3AF7571C815}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BT.Common.Polly", "..\Submodules\BT\src\BT.Common\BT.Common.Polly\BT.Common.Polly.csproj", "{43BE26FC-164A-458B-BF32-DB23719B033E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,11 +61,18 @@ Global
 		{098EB28F-7DE8-4C77-AB47-7331A46783C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{098EB28F-7DE8-4C77-AB47-7331A46783C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{098EB28F-7DE8-4C77-AB47-7331A46783C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43BE26FC-164A-458B-BF32-DB23719B033E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43BE26FC-164A-458B-BF32-DB23719B033E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43BE26FC-164A-458B-BF32-DB23719B033E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43BE26FC-164A-458B-BF32-DB23719B033E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C122D0E2-872C-45D3-AB0F-E1FA14AFCE8E}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{43BE26FC-164A-458B-BF32-DB23719B033E} = {7870B4D1-9D51-4166-AE81-C3AF7571C815}
 	EndGlobalSection
 EndGlobal
