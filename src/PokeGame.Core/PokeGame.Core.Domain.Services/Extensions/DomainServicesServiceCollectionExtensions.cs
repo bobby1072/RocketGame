@@ -23,6 +23,7 @@ public static class DomainServicesServiceCollectionExtensions
             .ConfigureSingletonOptions<ServiceInfo>(serviceInfoSection)
             .AddHttpClient()
             .AddLogging()
+            .AddDistributedMemoryCache()
             .AddCommonServices()
             .AddPokeGamePersistence(configuration, environment.IsDevelopment());
         
