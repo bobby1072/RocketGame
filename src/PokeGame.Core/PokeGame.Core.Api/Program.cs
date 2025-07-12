@@ -1,21 +1,42 @@
-var builder = WebApplication.CreateBuilder(args);
+using BT.Common.Helpers;
+using PokeGame.Core.Domain.Services.Extensions;
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+var localLogger = LoggingHelper.CreateLogger();
 
-var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
+try
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    localLogger.LogInformation("Application starting...");
+    
+    var builder = WebApplication.CreateBuilder(args);
+    
+    builder.Services
+        .AddPokeGameApplicationServices(builder.Configuration, builder.Environment);
+
+    builder.Services.AddControllers();
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
+
+    var app = builder.Build();
+
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+
+    app.UseHttpsRedirection();
+
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    await app.RunAsync();
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+catch (Exception ex)
+{
+    localLogger.LogCritical(ex, "Unhandled exception in application... with message: {ExMessage}", ex.Message);
+}
+finally
+{
+    localLogger.LogInformation("Application is exiting...");
+}

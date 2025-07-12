@@ -26,3 +26,5 @@ bin/
 debug/
 .vs/
 obj/
+
+.aspnet/

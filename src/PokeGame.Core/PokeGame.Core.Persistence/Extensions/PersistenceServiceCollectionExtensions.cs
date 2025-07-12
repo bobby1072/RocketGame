@@ -1,0 +1,66 @@
+﻿using AiTrainer.Web.Persistence.Migrations.Abstract;
+using AiTrainer.Web.Persistence.Migrations.Concrete;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Npgsql;
+using PokeGame.Core.Common;
+using PokeGame.Core.Common.Extensions;
+using PokeGame.Core.Persistence.Configurations;
+using PokeGame.Core.Persistence.Contexts;
+
+namespace PokeGame.Core.Persistence.Extensions;
+
+public static class PersistenceServiceCollectionExtensions
+{
+    public static IServiceCollection AddPokeGamePersistence(this IServiceCollection services, IConfiguration configuration, bool isDevelopment = true)
+    {
+        var connectionString = configuration.GetConnectionString("PostgresConnection");
+        var migrationConfigSection = configuration.GetSection(DbMigrationSettings.Key);
+        if (!migrationConfigSection.Exists())
+        {
+            throw new InvalidDataException(ExceptionConstants.MissingEnvVars);
+        }
+
+        services
+            .ConfigureSingletonOptions<DbMigrationSettings>(migrationConfigSection);
+        
+        var connectionStringBuilder = new NpgsqlConnectionStringBuilder(connectionString);
+
+        
+        
+        services
+            .AddSingleton<IMigrator>(sp => new DatabaseMigrator(
+                    sp.GetRequiredService<ILoggerFactory>().CreateLogger<DatabaseMigrator>(),
+                    sp.GetRequiredService<DbMigrationSettings>(),
+                    connectionStringBuilder.ConnectionString
+                ))
+            .AddHostedService<DatabaseMigratorHostedService>()
+            .AddPooledDbContextFactory<PokeGameContext>(options =>
+                {
+                    if (isDevelopment)
+                    {
+                        options
+                            .EnableDetailedErrors()
+                            .EnableSensitiveDataLogging();
+                    }
+                    options
+                        .UseSnakeCaseNamingConvention()
+                        .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                        .UseNpgsql(
+                            connectionStringBuilder.ConnectionString,
+                            npgOpts =>
+                            {
+                                npgOpts.UseQuerySplittingBehavior(
+                                    QuerySplittingBehavior.SingleQuery
+                                );
+                            }
+                        );
+                }
+            );
+        
+
+        return services;
+    }
+}
