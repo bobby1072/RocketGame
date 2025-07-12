@@ -3,26 +3,27 @@ using EvolveDb;
 using EvolveDb.Migration;
 using Microsoft.Extensions.Logging;
 using Npgsql;
+using PokeGame.Core.Persistence.Configurations;
 
 namespace AiTrainer.Web.Persistence.Migrations.Concrete
 {
-    internal sealed class DatabaseMigrations : IMigrator
+    internal sealed class DatabaseMigrator : IMigrator
     {
-        private readonly ILogger<DatabaseMigrations> _logger;
+        private readonly ILogger<DatabaseMigrator> _logger;
         private readonly string _connectionString;
         private readonly string _startVersion;
-        public DatabaseMigrations(ILogger<DatabaseMigrations> logger, string connectionUrl, string startVersion)
+        public DatabaseMigrator(ILogger<DatabaseMigrator> logger, DbMigrationSettings migrationSettings, string connectionString)
         {
             _logger = logger;
-            _connectionString = connectionUrl;
-            _startVersion = startVersion;
+            _startVersion = migrationSettings.StartVersion;
+            _connectionString = connectionString;
         }
         public Task Migrate()
         {
             using var connection = new NpgsqlConnection(_connectionString);
             var evolve = new Evolve(connection, msg => _logger.LogInformation(msg))
             {
-                EmbeddedResourceAssemblies = new[] { typeof(DatabaseMigrations).Assembly },
+                EmbeddedResourceAssemblies = new[] { typeof(DatabaseMigrator).Assembly },
                 EnableClusterMode = true,
                 StartVersion = new MigrationVersion(_startVersion),
                 IsEraseDisabled = true,
