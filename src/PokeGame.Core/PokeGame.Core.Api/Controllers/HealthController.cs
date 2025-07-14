@@ -37,7 +37,7 @@ public sealed class HealthController: ControllerBase
                 (ActionResult<WebOutcome<ServiceInfo>>)
                     new WebOutcome<ServiceInfo>
                     {
-                        ExceptionMessage = PokeGameConstants.InternalServerError
+                        ExceptionMessage = ExceptionConstants.InternalError
                     });    
         }
     }

@@ -21,7 +21,7 @@ internal sealed class DistributedCachingService : ICachingService
         _logger = logger;
     }
 
-    public async Task<bool> TryRemoveObject(string key)
+    public async Task<bool> TryRemoveObjectAsync(string key)
     {
         try
         {
@@ -36,7 +36,7 @@ internal sealed class DistributedCachingService : ICachingService
         }
     }
 
-    public async Task<T?> TryGetObject<T>(string key)
+    public async Task<T?> TryGetObjectAsync<T>(string key)
         where T : class
     {
         try
@@ -57,14 +57,14 @@ internal sealed class DistributedCachingService : ICachingService
         }
     }
 
-    public Task<string> SetObject<T>(
+    public Task<string> SetObjectAsync<T>(
         string key,
         T value,
         CacheObjectTimeToLiveInSeconds timeToLive = CacheObjectTimeToLiveInSeconds.TenMinutes
     )
         where T : class
     {
-        return SetObject(
+        return SetObjectAsync(
             key,
             value,
             new DistributedCacheEntryOptions
@@ -74,7 +74,7 @@ internal sealed class DistributedCachingService : ICachingService
         );
     }
 
-    public async Task<string> SetObject<T>(
+    public async Task<string> SetObjectAsync<T>(
         string key,
         T value,
         DistributedCacheEntryOptions options
