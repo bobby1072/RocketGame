@@ -6,4 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\Submodules\BT\src\BT.Common\BT.Common.Persistence.Shared\BT.Common.Persistence.Shared.csproj" />
+      <ProjectReference Include="..\PokeGame.Core.Domain.Models\PokeGame.Core.Domain.Models.csproj" />
+    </ItemGroup>
+
 </Project>

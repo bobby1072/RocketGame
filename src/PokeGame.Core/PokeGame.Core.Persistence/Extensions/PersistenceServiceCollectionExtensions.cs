@@ -9,6 +9,8 @@ using PokeGame.Core.Common;
 using PokeGame.Core.Common.Extensions;
 using PokeGame.Core.Persistence.Configurations;
 using PokeGame.Core.Persistence.Contexts;
+using PokeGame.Core.Persistence.Repositories.Abstract;
+using PokeGame.Core.Persistence.Repositories.Concrete;
 
 namespace PokeGame.Core.Persistence.Extensions;
 
@@ -31,7 +33,7 @@ public static class PersistenceServiceCollectionExtensions
         
         
         services
-            .AddSingleton<IMigrator>(sp => new DatabaseMigrator(
+            .AddSingleton<IMigrator, DatabaseMigrator>(sp => new DatabaseMigrator(
                     sp.GetRequiredService<ILoggerFactory>().CreateLogger<DatabaseMigrator>(),
                     sp.GetRequiredService<DbMigrationSettings>(),
                     connectionStringBuilder.ConnectionString
@@ -59,6 +61,11 @@ public static class PersistenceServiceCollectionExtensions
                         );
                 }
             );
+
+
+
+        services
+            .AddScoped<IUserRepository, UserRepository>();
         
 
         return services;
