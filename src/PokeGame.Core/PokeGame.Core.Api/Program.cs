@@ -1,4 +1,5 @@
 using BT.Common.Helpers;
+using PokeGame.Core.Api.Middlewares;
 using PokeGame.Core.Domain.Services.Extensions;
 
 var localLogger = LoggingHelper.CreateLogger();
@@ -28,13 +29,17 @@ try
 
     app.UseAuthorization();
 
+    app
+        .UseMiddleware<ExceptionHandlingMiddleware>()
+        .UseMiddleware<CorrelationIdMiddleware>();
+    
     app.MapControllers();
 
     await app.RunAsync();
 }
 catch (Exception ex)
 {
-    localLogger.LogCritical(ex, "Unhandled exception in application... with message: {ExMessage}", ex.Message);
+    localLogger.LogCritical(ex, "Unhandled exception in application with message: {ExMessage}", ex.Message);
 }
 finally
 {
