@@ -6,5 +6,5 @@ namespace PokeGame.Core.Common.Exceptions;
 public sealed class PokeGameApiServerException: PokeGameApiException
 {
     public PokeGameApiServerException(HttpStatusCode statusCode, LogLevel overrideLogLevel,string message): base(statusCode, overrideLogLevel, message) {}    
-    public PokeGameApiServerException(HttpStatusCode statusCode, string message): base(statusCode, LogLevel.Error, message) {}
+    public PokeGameApiServerException(string message): base(HttpStatusCode.InternalServerError, LogLevel.Error, message) {}
 }
