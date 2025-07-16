@@ -2,7 +2,7 @@
 
 namespace PokeGame.Core.Persistence.Entities;
 
-public sealed record UserEntity: BasePokeGameEntity<Guid?, User>
+public sealed class UserEntity: BasePokeGameEntity<Guid?, User>
 {
     public required string Email { get; set; }
     public required string Name { get; set; }

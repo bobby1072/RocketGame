@@ -16,7 +16,8 @@ try
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
-
+    builder.Services.AddResponseCompression();
+    
     var app = builder.Build();
 
     if (app.Environment.IsDevelopment())
@@ -24,7 +25,10 @@ try
         app.UseSwagger();
         app.UseSwaggerUI();
     }
+    app.UseRouting();
 
+    app.UseResponseCompression();
+    
     app.UseHttpsRedirection();
 
     app.UseAuthorization();

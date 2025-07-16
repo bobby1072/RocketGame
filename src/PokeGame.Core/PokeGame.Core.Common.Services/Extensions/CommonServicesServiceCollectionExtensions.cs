@@ -8,8 +8,8 @@ public static class CommonServicesServiceCollectionExtensions
 {
     public static IServiceCollection AddCommonServices(this IServiceCollection services)
     {
-        services
-            .AddScoped<ICachingService, DistributedCachingService>();
+        // services
+        //     .AddScoped<ICachingService, DistributedCachingService>();
         
         
         return services;
