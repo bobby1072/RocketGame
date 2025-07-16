@@ -26,7 +26,8 @@ internal sealed class ExceptionHandlingMiddleware
             catch (PokeGameApiUserException exception)
             {
                 logger.Log(exception.LogLevel, exception,
-                    "A PokeGameApiUserException was thrown during request with status code: {StatusCode}",
+                    "A PokeGame exception of type: {ExceptionName} was thrown during request with status code: {StatusCode}",
+                    nameof(PokeGameApiUserException),
                     exception.StatusCode);
 
                 await SendExceptionResponseAsync(context, exception.Message, (int)exception.StatusCode);
@@ -34,7 +35,8 @@ internal sealed class ExceptionHandlingMiddleware
             catch (PokeGameApiServerException exception)
             {
                 logger.Log(exception.LogLevel, exception,
-                    "A PokeGameApiServerException was thrown during request with status code: {StatusCode}",
+                    "A PokeGame exception of type: {ExceptionName} was thrown during request with status code: {StatusCode}",
+                    nameof(PokeGameApiServerException),
                     exception.StatusCode);
 
                 await SendExceptionResponseAsync(context, ExceptionConstants.InternalError, (int)exception.StatusCode);
