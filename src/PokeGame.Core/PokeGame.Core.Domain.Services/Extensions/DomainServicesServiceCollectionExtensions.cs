@@ -43,7 +43,7 @@ public static class DomainServicesServiceCollectionExtensions
     private static IServiceCollection AddUserServices(this IServiceCollection services)
     {
         services
-            .AddScoped<IDomainCommand<RegisterUserInput, Domain.Models.User>, RegisterUserCommand>();
+            .AddScoped<IDomainCommand<SaveUserInput, Domain.Models.User>, SaveUserCommand>();
 
         return services;
     }
