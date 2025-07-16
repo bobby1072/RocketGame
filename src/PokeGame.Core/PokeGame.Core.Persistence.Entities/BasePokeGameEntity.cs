@@ -3,4 +3,4 @@ using PokeGame.Core.Domain.Models;
 
 namespace PokeGame.Core.Persistence.Entities;
 
-public abstract record BasePokeGameEntity<TId, TRuntime> : BaseEntity<TId, TRuntime> where TRuntime: PersistableDomainModel<TRuntime, TId> { }
+public abstract class BasePokeGameEntity<TId, TRuntime> : BaseEntity<TId, TRuntime> where TRuntime: PersistableDomainModel<TRuntime, TId> { }

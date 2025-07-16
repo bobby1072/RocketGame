@@ -4,6 +4,10 @@ using Microsoft.Extensions.Hosting;
 using PokeGame.Core.Common.Configurations;
 using PokeGame.Core.Common.Extensions;
 using PokeGame.Core.Common.Services.Extensions;
+using PokeGame.Core.Domain.Models.Extensions;
+using PokeGame.Core.Domain.Models.Input;
+using PokeGame.Core.Domain.Services.Abstract;
+using PokeGame.Core.Domain.Services.User.Commands;
 using PokeGame.Core.Persistence.Extensions;
 
 namespace PokeGame.Core.Domain.Services.Extensions;
@@ -22,11 +26,24 @@ public static class DomainServicesServiceCollectionExtensions
         services
             .AddHttpClient()
             .AddLogging()
-            .AddDistributedMemoryCache()
+            // .AddDistributedMemoryCache()
             .AddCommonServices()
+            .AddDomainModelValidators()
             .AddPokeGamePersistence(configuration, environment.IsDevelopment())
             .ConfigureSingletonOptions<ServiceInfo>(serviceInfoSection);
-        
+
+
+
+        services
+            .AddUserServices();
+
+        return services;
+    }
+
+    private static IServiceCollection AddUserServices(this IServiceCollection services)
+    {
+        services
+            .AddScoped<IDomainCommand<RegisterUserInput, Domain.Models.User>, RegisterUserCommand>();
 
         return services;
     }
