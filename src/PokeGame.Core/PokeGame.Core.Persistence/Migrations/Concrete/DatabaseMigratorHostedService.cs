@@ -1,9 +1,9 @@
-﻿using AiTrainer.Web.Persistence.Migrations.Abstract;
-using BT.Common.Polly.Extensions;
+﻿using BT.Common.Polly.Extensions;
 using Microsoft.Extensions.Hosting;
 using PokeGame.Core.Persistence.Configurations;
+using PokeGame.Core.Persistence.Migrations.Abstract;
 
-namespace AiTrainer.Web.Persistence.Migrations.Concrete
+namespace PokeGame.Core.Persistence.Migrations.Concrete
 {
     internal sealed class DatabaseMigratorHostedService : IHostedService
     {

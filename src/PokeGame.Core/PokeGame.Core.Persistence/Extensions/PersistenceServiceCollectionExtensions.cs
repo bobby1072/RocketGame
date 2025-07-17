@@ -1,6 +1,4 @@
-﻿using AiTrainer.Web.Persistence.Migrations.Abstract;
-using AiTrainer.Web.Persistence.Migrations.Concrete;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -9,6 +7,8 @@ using PokeGame.Core.Common;
 using PokeGame.Core.Common.Extensions;
 using PokeGame.Core.Persistence.Configurations;
 using PokeGame.Core.Persistence.Contexts;
+using PokeGame.Core.Persistence.Migrations.Abstract;
+using PokeGame.Core.Persistence.Migrations.Concrete;
 using PokeGame.Core.Persistence.Repositories.Abstract;
 using PokeGame.Core.Persistence.Repositories.Concrete;
 

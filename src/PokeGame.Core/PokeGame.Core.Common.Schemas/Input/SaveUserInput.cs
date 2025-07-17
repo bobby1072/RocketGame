@@ -1,4 +1,4 @@
-﻿namespace PokeGame.Core.Domain.Models.Input;
+﻿namespace PokeGame.Core.Common.Schemas.Input;
 
 public sealed class SaveUserInput
 {

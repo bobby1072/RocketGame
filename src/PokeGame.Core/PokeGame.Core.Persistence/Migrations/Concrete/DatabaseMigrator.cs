@@ -1,11 +1,11 @@
-﻿using AiTrainer.Web.Persistence.Migrations.Abstract;
-using EvolveDb;
+﻿using EvolveDb;
 using EvolveDb.Migration;
 using Microsoft.Extensions.Logging;
 using Npgsql;
 using PokeGame.Core.Persistence.Configurations;
+using PokeGame.Core.Persistence.Migrations.Abstract;
 
-namespace AiTrainer.Web.Persistence.Migrations.Concrete
+namespace PokeGame.Core.Persistence.Migrations.Concrete
 {
     internal sealed class DatabaseMigrator : IMigrator
     {
