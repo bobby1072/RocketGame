@@ -1,4 +1,4 @@
-﻿namespace PokeGame.Core.Common.Schemas;
+﻿namespace PokeGame.Core.Schemas;
 
 public abstract class DomainModel { }
 

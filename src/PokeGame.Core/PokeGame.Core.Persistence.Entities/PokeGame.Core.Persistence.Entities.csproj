@@ -8,7 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Submodules\BT\src\BT.Common\BT.Common.Persistence.Shared\BT.Common.Persistence.Shared.csproj" />
-      <ProjectReference Include="..\PokeGame.Core.Common.Schemas\PokeGame.Core.Common.Schemas.csproj" />
+      <ProjectReference Include="..\PokeGame.Core.Schemas\PokeGame.Core.Schemas.csproj" />
     </ItemGroup>
 
 </Project>

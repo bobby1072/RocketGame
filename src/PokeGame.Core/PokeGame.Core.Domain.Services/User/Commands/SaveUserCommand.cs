@@ -3,19 +3,19 @@ using BT.Common.Persistence.Shared.Utils;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PokeGame.Core.Common.Exceptions;
-using PokeGame.Core.Common.Schemas.Input;
 using PokeGame.Core.Domain.Services.Abstract;
 using PokeGame.Core.Persistence.Repositories.Abstract;
+using PokeGame.Core.Schemas.Input;
 
 namespace PokeGame.Core.Domain.Services.User.Commands;
 
-public sealed class SaveUserCommand: IDomainCommand<SaveUserInput, Common.Schemas.User>
+public sealed class SaveUserCommand: IDomainCommand<SaveUserInput, Schemas.User>
 {
     public string CommandName => nameof(SaveUserCommand);
     private readonly IUserRepository _userRepository;
-    private readonly IValidator<Common.Schemas.User> _validator;
+    private readonly IValidator<Schemas.User> _validator;
     private readonly ILogger<SaveUserCommand> _logger;
-    public SaveUserCommand(IUserRepository userRepository, IValidator<Common.Schemas.User> validator, ILogger<SaveUserCommand> logger)
+    public SaveUserCommand(IUserRepository userRepository, IValidator<Schemas.User> validator, ILogger<SaveUserCommand> logger)
     {
         _userRepository = userRepository;
         _validator = validator;
@@ -23,7 +23,7 @@ public sealed class SaveUserCommand: IDomainCommand<SaveUserInput, Common.Schema
     }
     
     
-    public async Task<Common.Schemas.User> ExecuteAsync(SaveUserInput input)
+    public async Task<Schemas.User> ExecuteAsync(SaveUserInput input)
     {
         _logger.LogInformation("About to attempt to save user with name: {Name}...", input.Name);
 

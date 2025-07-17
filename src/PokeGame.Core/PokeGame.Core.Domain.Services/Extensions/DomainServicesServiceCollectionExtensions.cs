@@ -3,12 +3,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PokeGame.Core.Common.Configurations;
 using PokeGame.Core.Common.Extensions;
-using PokeGame.Core.Common.Schemas.Extensions;
-using PokeGame.Core.Common.Schemas.Input;
 using PokeGame.Core.Common.Services.Extensions;
 using PokeGame.Core.Domain.Services.Abstract;
 using PokeGame.Core.Domain.Services.User.Commands;
 using PokeGame.Core.Persistence.Extensions;
+using PokeGame.Core.Schemas.Extensions;
+using PokeGame.Core.Schemas.Input;
 
 namespace PokeGame.Core.Domain.Services.Extensions;
 
@@ -43,7 +43,7 @@ public static class DomainServicesServiceCollectionExtensions
     private static IServiceCollection AddUserServices(this IServiceCollection services)
     {
         services
-            .AddScoped<IDomainCommand<SaveUserInput, Common.Schemas.User>, SaveUserCommand>();
+            .AddScoped<IDomainCommand<SaveUserInput, Schemas.User>, SaveUserCommand>();
 
         return services;
     }

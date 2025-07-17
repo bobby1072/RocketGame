@@ -1,5 +1,5 @@
 ﻿using BT.Common.Persistence.Shared.Entities;
-using PokeGame.Core.Common.Schemas;
+using PokeGame.Core.Schemas;
 
 namespace PokeGame.Core.Persistence.Entities;
 

@@ -1,6 +1,6 @@
 ﻿using BT.Common.Persistence.Shared.Repositories.Abstract;
-using PokeGame.Core.Common.Schemas;
 using PokeGame.Core.Persistence.Entities;
+using PokeGame.Core.Schemas;
 
 namespace PokeGame.Core.Persistence.Repositories.Abstract;
 
