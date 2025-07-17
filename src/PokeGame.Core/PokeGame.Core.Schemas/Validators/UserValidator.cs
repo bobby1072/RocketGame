@@ -1,7 +1,8 @@
 ﻿using System.Net.Mail;
 using FluentValidation;
+using PokeGame.Core.Schemas;
 
-namespace PokeGame.Core.Common.Schemas.Validators;
+namespace PokeGame.Core.Schemas.Validators;
 
 internal sealed class UserValidator: AbstractValidator<User>
 {

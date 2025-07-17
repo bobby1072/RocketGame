@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeGame.Core.Domain.Servic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeGame.Core.Common.Services", "PokeGame.Core.Common.Services\PokeGame.Core.Common.Services.csproj", "{51424F76-35C6-432E-9A42-4DC41C0E2B23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeGame.Core.Common.Schemas", "PokeGame.Core.Common.Schemas\PokeGame.Core.Common.Schemas.csproj", "{FF28FA29-1CAF-4465-AAE0-2222FF608912}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeGame.Core.Schemas", "PokeGame.Core.Schemas\PokeGame.Core.Schemas.csproj", "{FF28FA29-1CAF-4465-AAE0-2222FF608912}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeGame.Core.Persistence", "PokeGame.Core.Persistence\PokeGame.Core.Persistence.csproj", "{7278FB6B-F645-42B4-AEA9-114E7005CAC1}"
 EndProject
