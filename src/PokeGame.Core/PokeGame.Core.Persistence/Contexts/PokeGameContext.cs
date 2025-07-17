@@ -1,7 +1,7 @@
 ﻿using BT.Common.FastArray.Proto;
 using BT.Common.Persistence.Shared.Entities;
 using Microsoft.EntityFrameworkCore;
-using PokeGame.Core.Domain.Models;
+using PokeGame.Core.Common.Schemas;
 using PokeGame.Core.Persistence.Entities;
 
 namespace PokeGame.Core.Persistence.Contexts;

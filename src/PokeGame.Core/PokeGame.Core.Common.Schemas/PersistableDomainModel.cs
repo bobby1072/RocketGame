@@ -1,4 +1,4 @@
-﻿namespace PokeGame.Core.Domain.Models;
+﻿namespace PokeGame.Core.Common.Schemas;
 
 public abstract class PersistableDomainModel<TEquatable, TId> : DomainModel<TEquatable>
     where TEquatable : DomainModel<TEquatable>

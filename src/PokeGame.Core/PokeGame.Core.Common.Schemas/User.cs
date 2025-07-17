@@ -1,4 +1,4 @@
-﻿namespace PokeGame.Core.Domain.Models;
+﻿namespace PokeGame.Core.Common.Schemas;
 
 public sealed class User: PersistableDomainModel<User, Guid?>
 {

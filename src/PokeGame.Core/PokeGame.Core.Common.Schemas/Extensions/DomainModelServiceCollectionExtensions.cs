@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using PokeGame.Core.Domain.Models.Validators;
+using PokeGame.Core.Common.Schemas.Validators;
 
-namespace PokeGame.Core.Domain.Models.Extensions;
+namespace PokeGame.Core.Common.Schemas.Extensions;
 
 public static class DomainModelServiceCollectionExtensions
 {

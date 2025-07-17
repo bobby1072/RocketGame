@@ -1,4 +1,4 @@
-﻿namespace AiTrainer.Web.Persistence.Migrations.Abstract
+﻿namespace PokeGame.Core.Persistence.Migrations.Abstract
 {
     internal interface IMigrator
     {
