@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using BT.Common.OperationTimer.Proto;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PokeGame.Core.Domain.Services.Abstract;
@@ -21,16 +22,21 @@ internal sealed class DomainServiceCommandExecutor: IDomainServiceCommandExecuto
         var foundCommand = _serviceProvider.GetRequiredService<TCommand>();
      
         _logger.LogInformation("Attempting to execute {CommandName}", foundCommand.CommandName);
-
         
-        await commandRun.Compile().Invoke(foundCommand);
+        var timeTaken = await OperationTimerUtils.TimeAsync(() => commandRun.Compile().Invoke(foundCommand));
+        
+        _logger.LogInformation("Executed {CommandName} in {TimeTaken}ms", foundCommand.CommandName, timeTaken.Milliseconds);
     }
-    public Task<TReturn> RunCommandAsync<TCommand, TInput, TReturn>(Expression<Func<TCommand, Task<TReturn>>> commandRun) where TCommand : IDomainCommand<TInput, TReturn>
+    public async Task<TReturn> RunCommandAsync<TCommand, TInput, TReturn>(Expression<Func<TCommand, Task<TReturn>>> commandRun) where TCommand : IDomainCommand<TInput, TReturn>
     {
         var foundCommand = _serviceProvider.GetRequiredService<TCommand>();
 
         _logger.LogInformation("Attempting to execute {CommandName}", foundCommand.CommandName);
         
-        return commandRun.Compile().Invoke(foundCommand);
+        var (timeTaken, result) = await OperationTimerUtils.TimeWithResultsAsync(() => commandRun.Compile().Invoke(foundCommand));
+        
+        _logger.LogInformation("Executed {CommandName} in {TimeTaken}ms", foundCommand.CommandName, timeTaken.Milliseconds);
+
+        return result;
     }
 }
