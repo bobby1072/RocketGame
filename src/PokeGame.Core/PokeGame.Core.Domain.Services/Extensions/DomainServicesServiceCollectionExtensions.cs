@@ -5,6 +5,7 @@ using PokeGame.Core.Common.Configurations;
 using PokeGame.Core.Common.Extensions;
 using PokeGame.Core.Common.Services.Extensions;
 using PokeGame.Core.Domain.Services.Abstract;
+using PokeGame.Core.Domain.Services.Concrete;
 using PokeGame.Core.Domain.Services.User.Commands;
 using PokeGame.Core.Persistence.Extensions;
 using PokeGame.Core.Schemas.Extensions;
@@ -32,8 +33,10 @@ public static class DomainServicesServiceCollectionExtensions
             .AddPokeGamePersistence(configuration, environment.IsDevelopment())
             .ConfigureSingletonOptions<ServiceInfo>(serviceInfoSection);
 
+        services
+            .AddScoped<IDomainServiceCommandExecutor, DomainServiceCommandExecutor>();
 
-
+        
         services
             .AddUserServices();
 
