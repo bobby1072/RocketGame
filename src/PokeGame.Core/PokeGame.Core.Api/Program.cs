@@ -13,6 +13,13 @@ try
     builder.Services
         .AddPokeGameApplicationServices(builder.Configuration, builder.Environment);
 
+    builder.Services.AddLogging(opts =>
+    {
+        opts.AddJsonConsole(ctx =>
+        {
+            ctx.IncludeScopes = true;
+        });
+    });
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();

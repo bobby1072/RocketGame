@@ -26,6 +26,8 @@ public sealed class HealthController: ControllerBase
     {
         try
         {
+            _logger.LogInformation("Service appears healthy...");
+            
             return Task.FromResult((ActionResult<WebOutcome<ServiceInfo>>)new WebOutcome<ServiceInfo>
                 { Data = _serviceInfo });
         }
