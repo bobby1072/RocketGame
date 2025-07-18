@@ -1,16 +1,16 @@
 ﻿namespace PokeGame.Core.Domain.Services.Abstract;
 
-public interface IDomainCommand
+internal interface IDomainCommand
 {
-    public string CommandName { get; }
+    string CommandName { get; }
 }
 
-public interface IDomainCommand<in TInput> : IDomainCommand
+internal interface IDomainCommand<in TInput> : IDomainCommand
 {
-    public Task ExecuteAsync(TInput input);
+    Task ExecuteAsync(TInput input);
 }
 
-public interface IDomainCommand<in TInput, TOutput> : IDomainCommand
+internal interface IDomainCommand<in TInput, TOutput> : IDomainCommand
 {
-    public Task<TOutput> ExecuteAsync(TInput input);
+    Task<TOutput> ExecuteAsync(TInput input);
 }

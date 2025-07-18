@@ -1,3 +1,4 @@
+using System.Text.Json;
 using BT.Common.Helpers;
 using PokeGame.Core.Api.Middlewares;
 using PokeGame.Core.Domain.Services.Extensions;
@@ -13,14 +14,22 @@ try
     builder.Services
         .AddPokeGameApplicationServices(builder.Configuration, builder.Environment);
 
-    builder.Services.AddLogging(opts =>
-    {
-        opts.AddJsonConsole(ctx =>
+    builder.Services
+        .AddLogging(opts =>
         {
-            ctx.IncludeScopes = true;
+            opts.AddJsonConsole(ctx =>
+            {
+                ctx.IncludeScopes = true;
+            });
         });
-    });
-    builder.Services.AddControllers();
+    
+    builder.Services
+        .AddControllers()
+        .AddJsonOptions(opts =>
+        {
+            opts.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        });
+    
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
     builder.Services.AddResponseCompression();

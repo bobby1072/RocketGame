@@ -24,10 +24,8 @@ internal sealed class CorrelationIdMiddleware
             logger.LogInformation("CorrelationId: {CorrelationId} added to request headers successfully", newCorrelationId);
         }
         
-        // Optional: store in context.Items for later retrieval in the pipeline
         context.Items[MiscConstants.CorrelationIdHeader] = newCorrelationId;
 
-        // Use a logging scope to propagate the CorrelationId
         using (logger.BeginScope(new Dictionary<string, object>
                {
                    [MiscConstants.CorrelationIdHeader] = newCorrelationId

@@ -2,11 +2,10 @@
 
 namespace PokeGame.Core.Domain.Services.Abstract;
 
-public interface IDomainServiceCommandExecutor
+internal interface IDomainServiceCommandExecutor
 {
-    Task RunCommandAsync<TCommand, TInput>(Expression<Func<TCommand, Task>> commandRun)
-        where TCommand : IDomainCommand<TInput>;
+    Task RunCommandAsync<TCommand, TInput>(TInput input) where TCommand : IDomainCommand<TInput>;
 
-    Task<TReturn> RunCommandAsync<TCommand, TInput, TReturn>(Expression<Func<TCommand, Task<TReturn>>> commandRun)
+    Task<TReturn> RunCommandAsync<TCommand, TInput, TReturn>(TInput input)
         where TCommand : IDomainCommand<TInput, TReturn>;
 }

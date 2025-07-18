@@ -14,4 +14,5 @@ public sealed class User: PersistableDomainModel<User, Guid?>
                DateCreated == other.DateCreated && 
                DateModified == other.DateModified;
     }
+    
 }

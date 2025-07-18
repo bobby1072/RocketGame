@@ -24,23 +24,9 @@ public sealed class HealthController: ControllerBase
     [HttpGet]
     public Task<ActionResult<WebOutcome<ServiceInfo>>> Health()
     {
-        try
-        {
-            _logger.LogInformation("Service appears healthy...");
-            
-            return Task.FromResult((ActionResult<WebOutcome<ServiceInfo>>)new WebOutcome<ServiceInfo>
-                { Data = _serviceInfo });
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "An exception occurred during the health route with message: {Message}", ex.Message);
-            
-            return Task.FromResult(
-                (ActionResult<WebOutcome<ServiceInfo>>)
-                    new WebOutcome<ServiceInfo>
-                    {
-                        ExceptionMessage = ExceptionConstants.InternalError
-                    });    
-        }
+        _logger.LogInformation("Service appears healthy...");
+        
+        return Task.FromResult((ActionResult<WebOutcome<ServiceInfo>>)new WebOutcome<ServiceInfo>
+            { Data = _serviceInfo });
     }
 }

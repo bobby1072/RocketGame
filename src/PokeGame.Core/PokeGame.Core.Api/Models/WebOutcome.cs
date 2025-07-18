@@ -6,7 +6,7 @@ public record WebOutcome
     
     public bool IsSuccess => string.IsNullOrEmpty(ExceptionMessage);
 
-    public Dictionary<string, object> ExtraData { get; init; } = [];
+    public Dictionary<string, object>? ExtraData { get; init; }
 }
 
 public sealed record WebOutcome<T>: WebOutcome
