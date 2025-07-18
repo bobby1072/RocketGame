@@ -9,7 +9,7 @@ using PokeGame.Core.Schemas.Input;
 
 namespace PokeGame.Core.Domain.Services.User.Commands;
 
-public sealed class SaveUserCommand: IDomainCommand<SaveUserInput, Schemas.User>
+internal sealed class SaveUserCommand: IDomainCommand<SaveUserInput, Schemas.User>
 {
     public string CommandName => nameof(SaveUserCommand);
     private readonly IUserRepository _userRepository;
@@ -50,7 +50,7 @@ public sealed class SaveUserCommand: IDomainCommand<SaveUserInput, Schemas.User>
                 throw new PokeGameApiServerException("Failed to retrieve existing user");
             }
             
-            parsedUser.DateCreated = DateTime.UtcNow;
+            parsedUser.DateCreated = foundExistingUser.Data.DateCreated;
             parsedUser.DateModified = DateTime.UtcNow;
         }
         

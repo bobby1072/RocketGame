@@ -17,23 +17,23 @@ internal sealed class DomainServiceCommandExecutor: IDomainServiceCommandExecuto
     }
 
 
-    public async Task RunCommandAsync<TCommand, TInput>(Expression<Func<TCommand, Task>> commandRun) where TCommand : IDomainCommand<TInput>
+    public async Task RunCommandAsync<TCommand, TInput>(TInput input) where TCommand : IDomainCommand<TInput>
     {
         var foundCommand = _serviceProvider.GetRequiredService<TCommand>();
      
         _logger.LogInformation("Attempting to execute {CommandName}", foundCommand.CommandName);
         
-        var timeTaken = await OperationTimerUtils.TimeAsync(() => commandRun.Compile().Invoke(foundCommand));
+        var timeTaken = await OperationTimerUtils.TimeAsync(() => foundCommand.ExecuteAsync(input));
         
         _logger.LogInformation("Executed {CommandName} in {TimeTaken}ms", foundCommand.CommandName, timeTaken.Milliseconds);
     }
-    public async Task<TReturn> RunCommandAsync<TCommand, TInput, TReturn>(Expression<Func<TCommand, Task<TReturn>>> commandRun) where TCommand : IDomainCommand<TInput, TReturn>
+    public async Task<TReturn> RunCommandAsync<TCommand, TInput, TReturn>(TInput input) where TCommand : IDomainCommand<TInput, TReturn>
     {
         var foundCommand = _serviceProvider.GetRequiredService<TCommand>();
 
         _logger.LogInformation("Attempting to execute {CommandName}", foundCommand.CommandName);
         
-        var (timeTaken, result) = await OperationTimerUtils.TimeWithResultsAsync(() => commandRun.Compile().Invoke(foundCommand));
+        var (timeTaken, result) = await OperationTimerUtils.TimeWithResultsAsync(() => foundCommand.ExecuteAsync(input));
         
         _logger.LogInformation("Executed {CommandName} in {TimeTaken}ms", foundCommand.CommandName, timeTaken.Milliseconds);
 
