@@ -11,7 +11,7 @@ try
     
     var builder = WebApplication.CreateBuilder(args);
     
-    builder.Services
+    await builder.Services
         .AddPokeGameApplicationServices(builder.Configuration, builder.Environment);
 
     builder.Services

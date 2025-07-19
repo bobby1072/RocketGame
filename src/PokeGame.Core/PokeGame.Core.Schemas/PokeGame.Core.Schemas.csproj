@@ -11,4 +11,8 @@
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.7" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\Submodules\BT\src\BT.Common\BT.Common.FastArray\BT.Common.FastArray.csproj" />
+    </ItemGroup>
+
 </Project>
