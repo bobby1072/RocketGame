@@ -15,7 +15,7 @@ namespace PokeGame.Core.Domain.Services.Extensions;
 
 public static class DomainServicesServiceCollectionExtensions
 {
-    public static IServiceCollection AddPokeGameApplicationServices(this IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
+    public static async Task<IServiceCollection> AddPokeGameApplicationServices(this IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
     {
         var serviceInfoSection = configuration.GetSection(ServiceInfo.Key);
 
@@ -27,12 +27,14 @@ public static class DomainServicesServiceCollectionExtensions
         services
             .AddHttpClient()
             .AddLogging()
-            // .AddDistributedMemoryCache()
             .AddCommonServices()
             .AddDomainModelValidators()
             .AddPokeGamePersistence(configuration, environment.IsDevelopment())
             .ConfigureSingletonOptions<ServiceInfo>(serviceInfoSection);
 
+        await services
+            .AddPokedexJson();
+        
         services
             .AddScoped<IDomainServiceCommandExecutor, DomainServiceCommandExecutor>();
 
