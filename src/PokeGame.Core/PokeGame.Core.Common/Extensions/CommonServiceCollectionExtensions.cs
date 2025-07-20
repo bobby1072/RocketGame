@@ -14,7 +14,7 @@ public static class CommonServiceCollectionExtensions
         
         
         services
-            .AddSingleton(pokedexJson);
+            .AddKeyedSingleton(ServiceKeys.PokedexJsonFile, pokedexJson);
         
 
         return services;

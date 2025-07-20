@@ -3,6 +3,7 @@ using BT.Common.FastArray.Proto;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using PokeGame.Core.Common;
 using PokeGame.Core.Common.Models;
 using PokeGame.Core.Domain.Services.Abstract;
 using PokeGame.Core.Domain.Services.Pokedex.Commands;
@@ -16,13 +17,13 @@ internal sealed class PokedexDataMigratorHostedService : BackgroundService
 {
     private readonly IServiceProvider _serviceProvider;
     private readonly IDatabaseMigratorHealthCheck _databaseMigratorHealthCheck;
-    private readonly PokedexJsonFile _pokedexJsonFile;
+    private readonly JsonDocument _pokedexJsonFile;
     private readonly ILogger<PokedexDataMigratorHostedService> _logger;
 
     public PokedexDataMigratorHostedService(
         IServiceProvider serviceProvider,
         IDatabaseMigratorHealthCheck databaseMigratorHealthCheck,
-        PokedexJsonFile pokedexJsonFile,
+        [FromKeyedServices(ServiceKeys.PokedexJsonFile)] JsonDocument pokedexJsonFile,
         ILogger<PokedexDataMigratorHostedService> logger)
     {
         _serviceProvider = serviceProvider;
@@ -64,11 +65,10 @@ internal sealed class PokedexDataMigratorHostedService : BackgroundService
 
     private async Task SeedPokedexDataAsync(CancellationToken cancellationToken)
     {
-        using var scope = _serviceProvider.CreateScope();
+        await using var scope = _serviceProvider.CreateAsyncScope();
         var commandExecutor = scope.ServiceProvider.GetRequiredService<IDomainServiceCommandExecutor>();
 
         var pokedexPokemonList = _pokedexJsonFile
-            .Data
             .Deserialize<IReadOnlyCollection<PokedexPokemonRawJson>>()
             ?.FastArraySelect(x => x.ToRuntimeModel())
             .ToArray() ?? [];
