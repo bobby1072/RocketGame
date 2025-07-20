@@ -5,8 +5,6 @@ VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeGame.Core.Api", "PokeGame.Core.Api\PokeGame.Core.Api.csproj", "{62F53818-F8C3-473C-BB5A-28DF70382245}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeGame.Core.PokeApiClient", "PokeGame.Core.PokeApiClient\PokeGame.Core.PokeApiClient.csproj", "{092F6491-0031-4E1D-B60B-FA508D5A7FC6}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeGame.Core.Common", "PokeGame.Core.Common\PokeGame.Core.Common.csproj", "{CA1E6BFB-7529-44DE-B6A3-088BD4689B92}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeGame.Core.Domain.Services", "PokeGame.Core.Domain.Services\PokeGame.Core.Domain.Services.csproj", "{EE8C7C35-3E7D-4A4A-95EB-3C59428D3915}"
@@ -33,6 +31,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BT.Common.Helpers", "..\Sub
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeGame.Core.Aspire", "PokeGame.Core.Aspire\PokeGame.Core.Aspire.csproj", "{912E2A50-737A-47CE-8729-563F463900AB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E9125AD7-F72B-49AF-A6DA-4D69D0465F2D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeGame.Core.Domain.Services.Tests", "PokeGame.Core.Domain.Services.Tests\PokeGame.Core.Domain.Services.Tests.csproj", "{64F1D581-15DA-4B44-A74A-137375F924D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,10 +45,6 @@ Global
 		{62F53818-F8C3-473C-BB5A-28DF70382245}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62F53818-F8C3-473C-BB5A-28DF70382245}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62F53818-F8C3-473C-BB5A-28DF70382245}.Release|Any CPU.Build.0 = Release|Any CPU
-		{092F6491-0031-4E1D-B60B-FA508D5A7FC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{092F6491-0031-4E1D-B60B-FA508D5A7FC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{092F6491-0031-4E1D-B60B-FA508D5A7FC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{092F6491-0031-4E1D-B60B-FA508D5A7FC6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CA1E6BFB-7529-44DE-B6A3-088BD4689B92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CA1E6BFB-7529-44DE-B6A3-088BD4689B92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA1E6BFB-7529-44DE-B6A3-088BD4689B92}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -95,6 +93,10 @@ Global
 		{912E2A50-737A-47CE-8729-563F463900AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{912E2A50-737A-47CE-8729-563F463900AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{912E2A50-737A-47CE-8729-563F463900AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64F1D581-15DA-4B44-A74A-137375F924D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64F1D581-15DA-4B44-A74A-137375F924D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64F1D581-15DA-4B44-A74A-137375F924D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64F1D581-15DA-4B44-A74A-137375F924D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -105,6 +107,7 @@ Global
 		{E2129431-1483-49F5-BAE3-0C0E919085E3} = {7870B4D1-9D51-4166-AE81-C3AF7571C815}
 		{83F18EFF-FEE1-47AB-9EAA-4F2FBBB0F505} = {7870B4D1-9D51-4166-AE81-C3AF7571C815}
 		{E9760AD8-95E6-4249-8D70-53E5AB10054A} = {7870B4D1-9D51-4166-AE81-C3AF7571C815}
+		{64F1D581-15DA-4B44-A74A-137375F924D4} = {E9125AD7-F72B-49AF-A6DA-4D69D0465F2D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C122D0E2-872C-45D3-AB0F-E1FA14AFCE8E}
