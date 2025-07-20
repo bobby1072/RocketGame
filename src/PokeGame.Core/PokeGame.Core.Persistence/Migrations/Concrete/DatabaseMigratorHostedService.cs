@@ -9,12 +9,15 @@ namespace PokeGame.Core.Persistence.Migrations.Concrete
     {
         private readonly IEnumerable<IMigrator> _databaseMigrators;
         private readonly DbMigrationSettings _dbMigrationsConfiguration;
+        private readonly IDatabaseMigratorHealthCheck _databaseMigratorHealthCheck;
         public DatabaseMigratorHostedService(
             IEnumerable<IMigrator>? databaseMigrators, 
-            DbMigrationSettings dbMigrationsConfiguration)
+            DbMigrationSettings dbMigrationsConfiguration,
+            IDatabaseMigratorHealthCheck databaseMigratorHealthCheck)
         {
             _databaseMigrators = databaseMigrators ?? new List<IMigrator>();
             _dbMigrationsConfiguration = dbMigrationsConfiguration;
+            _databaseMigratorHealthCheck = databaseMigratorHealthCheck;
         }
         public async Task StartAsync(CancellationToken cancellationToken)
         {
@@ -22,6 +25,8 @@ namespace PokeGame.Core.Persistence.Migrations.Concrete
             var pipeline = _dbMigrationsConfiguration.ToPipeline();
             
             await pipeline.ExecuteAsync(async _ => await Migrate(), cancellationToken);
+            
+            _databaseMigratorHealthCheck.MigrationCompleted = true;
         }
         public Task StopAsync(CancellationToken cancellationToken)
         {

@@ -30,6 +30,14 @@ public static class PersistenceServiceCollectionExtensions
         
         var connectionStringBuilder = new NpgsqlConnectionStringBuilder(connectionString);
 
+
+        services
+            .AddSingleton<IDatabaseMigratorHealthCheck, DatabaseMigratorHealthCheck>()
+            .AddHealthChecks()
+            .AddCheck<IDatabaseMigratorHealthCheck>(
+                DatabaseMigratorHealthCheck.Name,
+                tags: ["Ready"]
+            );
         
         
         services
