@@ -4,12 +4,12 @@ namespace PokeGame.Core.Persistence.Entities.Extensions;
 
 internal static class PersistableDomainModelExtensions
 {
-    public static PokedexPokemonEntity ToEntity(this PokedexPokemonRawJson pokemon)
+    public static PokedexPokemonEntity ToEntity(this PokedexPokemon pokemon)
     {
         return new PokedexPokemonEntity
         {
             Id = pokemon.Id,
-            PokemonJson = pokemon
+            PokemonJson = pokemon.ToJsonType()
         };
     }
     

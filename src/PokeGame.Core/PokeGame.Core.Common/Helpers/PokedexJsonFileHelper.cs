@@ -5,11 +5,11 @@ namespace PokeGame.Core.Common.Helpers;
 
 internal static class PokedexJsonFileHelper
 {
-    public static async Task<PokedexJson> GetFromDataFolder()
+    public static async Task<PokedexJsonFile> GetFromDataFolder()
     {
         var readJson = await File.ReadAllTextAsync(Path.GetFullPath("../Data/Pokedex.json"));
 
-        return new PokedexJson
+        return new PokedexJsonFile
         {
             Data = JsonDocument.Parse(readJson),
         };

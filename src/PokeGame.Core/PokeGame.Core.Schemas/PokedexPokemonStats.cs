@@ -18,4 +18,18 @@ public sealed class PokedexPokemonStats: DomainModel<PokedexPokemonStats>
                other.SpecialDefense == SpecialDefense &&
                other.Speed == Speed;
     }
+
+
+    public PokedexPokemonStatsRawJson ToJson()
+    {
+        return new PokedexPokemonStatsRawJson
+        {
+            Attack = Attack,
+            Defense = Defense,
+            Hp = Hp,
+            Speed = Speed,
+            SpecialAttack = SpecialAttack,
+            SpecialDefense = SpecialDefense,
+        };
+    }
 }

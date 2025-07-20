@@ -63,7 +63,7 @@ internal sealed class PokeGameContext: DbContext
         var updatingEntries = ChangeTracker
             .Entries()
             .FastArrayWhere(e =>
-                e.State == EntityState.Added || e.State == EntityState.Modified
+                e.State is EntityState.Added or EntityState.Modified
             )
             .ToArray();
 
