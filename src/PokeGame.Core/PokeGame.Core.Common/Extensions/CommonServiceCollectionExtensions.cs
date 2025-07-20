@@ -2,8 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using PokeGame.Core.Common.Helpers;
-using PokeGame.Core.Common.Models;
-
 namespace PokeGame.Core.Common.Extensions;
 
 public static class CommonServiceCollectionExtensions
