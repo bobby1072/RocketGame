@@ -7,6 +7,7 @@ using PokeGame.Core.Common.Services.Extensions;
 using PokeGame.Core.Domain.Services.Abstract;
 using PokeGame.Core.Domain.Services.Concrete;
 using PokeGame.Core.Domain.Services.Pokedex.Commands;
+using PokeGame.Core.Domain.Services.Pokedex.Concrete;
 using PokeGame.Core.Domain.Services.User.Commands;
 using PokeGame.Core.Persistence.Extensions;
 using PokeGame.Core.Schemas;
@@ -40,7 +41,8 @@ public static class DomainServicesServiceCollectionExtensions
         services
             .AddScoped<IDomainServiceCommandExecutor, DomainServiceCommandExecutor>()
             .AddScoped<IDomainCommand<IReadOnlyCollection<PokedexPokemon>, IReadOnlyCollection<PokedexPokemon>>, CreatePokedexPokemonCommand>()
-            .AddScoped<IDomainCommand<SaveUserInput, Schemas.User>, SaveUserCommand>();
+            .AddScoped<IDomainCommand<SaveUserInput, Schemas.User>, SaveUserCommand>()
+            .AddHostedService<PokedexDataMigratorHostedService>();
 
         return services;
     }
