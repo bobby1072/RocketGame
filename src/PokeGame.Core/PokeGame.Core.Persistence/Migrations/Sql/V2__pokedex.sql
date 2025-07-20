@@ -1,4 +1,4 @@
 CREATE TABLE public."pokedex"(
     id INTEGER PRIMARY KEY,
-    pokemon_json JSONB NOT NULL
+    pokemon_json jsonb NOT NULL
 );

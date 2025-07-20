@@ -16,17 +16,4 @@ public sealed record PokedexPokemonStatsRawJson
     public required int SpecialDefense { get; set; }
     [JsonPropertyName("Speed")]
     public required int Speed { get; set; }
-
-    public PokedexPokemonStats ToRuntimeModel()
-    {
-        return new PokedexPokemonStats
-        {
-            Hp = Hp,
-            Attack = Attack,
-            Defense = Defense,
-            Speed = Speed,
-            SpecialAttack = SpecialAttack,
-            SpecialDefense = SpecialDefense,
-        };
-    }
 }

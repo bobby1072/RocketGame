@@ -1,4 +1,5 @@
-﻿using BT.Common.FastArray.Proto;
+﻿using System.Text.Json;
+using BT.Common.FastArray.Proto;
 using BT.Common.Persistence.Shared.Entities;
 using Microsoft.EntityFrameworkCore;
 using PokeGame.Core.Persistence.Entities;
@@ -9,6 +10,7 @@ namespace PokeGame.Core.Persistence.Contexts;
 internal sealed class PokeGameContext: DbContext
 {
     public DbSet<UserEntity> Users { get; set; }
+    public DbSet<PokedexPokemonEntity> PokedexPokemons { get; set; }
     public PokeGameContext(DbContextOptions<PokeGameContext> options) : base(options) {}
 
 
@@ -42,6 +44,19 @@ internal sealed class PokeGameContext: DbContext
         return base.SaveChanges();
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<PokedexPokemonEntity>(ent =>
+        {
+            ent
+                .Property(x => x.PokemonJson)
+                .HasConversion(
+                    x => JsonSerializer.Serialize(x, default(JsonSerializerOptions)),
+                    x => DeserializePokedexJson(x)
+                )
+                .HasColumnType("jsonb");
+        });
+    }
     private void UpdateDatesOnNewlyAddedOrModified()
     {
         var currentTime = DateTime.UtcNow;
@@ -111,5 +126,11 @@ internal sealed class PokeGameContext: DbContext
                 //This is ok because we are just trying to update values
             }
         }
+    }
+    
+    private static PokedexPokemonRawJson DeserializePokedexJson(string json)
+    {
+        return JsonSerializer.Deserialize<PokedexPokemonRawJson>(json) 
+               ?? throw new JsonException("Failed to deserialize pokedex json from db");
     }
 }

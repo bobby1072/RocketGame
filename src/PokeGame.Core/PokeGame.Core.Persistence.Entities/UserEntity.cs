@@ -1,7 +1,9 @@
-﻿using PokeGame.Core.Schemas;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using PokeGame.Core.Schemas;
 
 namespace PokeGame.Core.Persistence.Entities;
 
+[Table("user", Schema = "public")]
 public sealed class UserEntity: BasePokeGameEntity<Guid?, User>
 {
     public required string Email { get; set; }
