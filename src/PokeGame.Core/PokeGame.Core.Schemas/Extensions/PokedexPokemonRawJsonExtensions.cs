@@ -6,6 +6,9 @@ public static class PokedexPokemonRawJsonExtensions
 {
     public static PokedexPokemon ToRuntimeModel(this PokedexPokemonRawJson pokedexPokemonRawJson)
     {
+        var foundFirstType = pokedexPokemonRawJson.Type.FastArrayFirstOrDefault();
+        var foundSecondType = pokedexPokemonRawJson.Type.FastArraySecondOrDefault();
+        
         return new PokedexPokemon
         {
             Id = pokedexPokemonRawJson.Id,
@@ -16,8 +19,8 @@ public static class PokedexPokemonRawJsonExtensions
             Stats = pokedexPokemonRawJson.Base.ToRuntimeModel(),
             Type = new PokedexPokemonType
             {
-                Type1 = Enum.Parse<PokemonType>(pokedexPokemonRawJson.Type.FastArrayFirst()),
-                Type2 = Enum.Parse<PokemonType>(pokedexPokemonRawJson.Type.FastArraySecond()),
+                Type1 = foundFirstType is null ? PokemonType.None : Enum.Parse<PokemonType>(foundFirstType),
+                Type2 = foundSecondType is null ? null : Enum.Parse<PokemonType>(foundSecondType),
             }
         };
     }

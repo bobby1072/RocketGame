@@ -2,6 +2,7 @@
 
 public enum PokemonType
 {
+    None,
     Bug,
     Dark,
     Dragon,

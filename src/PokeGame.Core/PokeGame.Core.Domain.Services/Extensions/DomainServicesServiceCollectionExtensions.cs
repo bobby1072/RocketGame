@@ -40,8 +40,8 @@ public static class DomainServicesServiceCollectionExtensions
         
         services
             .AddScoped<IDomainServiceCommandExecutor, DomainServiceCommandExecutor>()
-            .AddScoped<IDomainCommand<IReadOnlyCollection<PokedexPokemon>, IReadOnlyCollection<PokedexPokemon>>, CreatePokedexPokemonCommand>()
-            .AddScoped<IDomainCommand<SaveUserInput, Schemas.User>, SaveUserCommand>()
+            .AddScoped<CreatePokedexPokemonCommand>()
+            .AddScoped<SaveUserCommand>()
             .AddHostedService<PokedexDataMigratorHostedService>();
 
         return services;
