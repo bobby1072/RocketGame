@@ -43,20 +43,6 @@ internal sealed class PokeGameContext: DbContext
         UpdateDatesOnNewlyAddedOrModified();
         return base.SaveChanges();
     }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<PokedexPokemonEntity>(ent =>
-        {
-            ent
-                .Property(x => x.PokemonJson)
-                .HasConversion(
-                    x => JsonSerializer.Serialize(x, default(JsonSerializerOptions)),
-                    x => DeserializePokedexJson(x)
-                )
-                .HasColumnType("jsonb");
-        });
-    }
     private void UpdateDatesOnNewlyAddedOrModified()
     {
         var currentTime = DateTime.UtcNow;
@@ -128,9 +114,4 @@ internal sealed class PokeGameContext: DbContext
         }
     }
     
-    private static PokedexPokemonRawJson DeserializePokedexJson(string json)
-    {
-        return JsonSerializer.Deserialize<PokedexPokemonRawJson>(json) 
-               ?? throw new JsonException("Failed to deserialize pokedex json from db");
-    }
 }

@@ -9,7 +9,18 @@ internal static class PersistableDomainModelExtensions
         return new PokedexPokemonEntity
         {
             Id = pokemon.Id,
-            PokemonJson = pokemon.ToJsonType()
+            Attack = pokemon.Stats.Attack,
+            Defense = pokemon.Stats.Defense,
+            Speed = pokemon.Stats.Speed,
+            SpecialAttack = pokemon.Stats.SpecialAttack,
+            SpecialDefense = pokemon.Stats.SpecialDefense,
+            Hp = pokemon.Stats.Hp,
+            Type1 = pokemon.Type.Type1.ToString(),
+            Type2 = pokemon.Type.Type2?.ToString(),
+            ChineseName = pokemon.ChineseName,
+            EnglishName = pokemon.EnglishName,
+            FrenchName = pokemon.FrenchName,
+            JapaneseName = pokemon.JapaneseName
         };
     }
     
