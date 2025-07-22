@@ -6,23 +6,25 @@ using PokeGame.Core.Schemas.Extensions;
 namespace PokeGame.Core.Persistence.Entities;
 
 [Table("pokedex", Schema = "public")]
-public sealed class PokedexPokemonEntity: BaseEntity<int, PokedexPokemon>
+public sealed class PokedexPokemonEntity : BaseEntity<int, PokedexPokemon>
 {
     public required string EnglishName { get; set; }
     public required string JapaneseName { get; set; }
     public required string ChineseName { get; set; }
     public required string FrenchName { get; set; }
+
     [Column(name: "type_one")]
     public required string Type1 { get; set; }
+
     [Column(name: "type_two")]
     public string? Type2 { get; set; }
     public required int Hp { get; set; }
     public required int Attack { get; set; }
-    public required int Defense { get; set; }
+    public required int Defence { get; set; }
     public required int SpecialAttack { get; set; }
-    public required int SpecialDefense { get; set; }
+    public required int SpecialDefence { get; set; }
     public required int Speed { get; set; }
-    
+
     public override PokedexPokemon ToModel()
     {
         return new PokedexPokemon
@@ -39,13 +41,13 @@ public sealed class PokedexPokemonEntity: BaseEntity<int, PokedexPokemon>
             Stats = new PokedexPokemonStats
             {
                 Attack = Attack,
-                Defense = Defense,
+                Defence = Defence,
                 Speed = Speed,
                 Hp = Hp,
                 SpecialAttack = SpecialAttack,
-                SpecialDefense = SpecialDefense,
+                SpecialDefence = SpecialDefence,
             },
-            JapaneseName = JapaneseName
+            JapaneseName = JapaneseName,
         };
     }
 }

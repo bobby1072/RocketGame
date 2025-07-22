@@ -10,20 +10,20 @@ internal static class PersistableDomainModelExtensions
         {
             Id = pokemon.Id,
             Attack = pokemon.Stats.Attack,
-            Defense = pokemon.Stats.Defense,
+            Defence = pokemon.Stats.Defence,
             Speed = pokemon.Stats.Speed,
             SpecialAttack = pokemon.Stats.SpecialAttack,
-            SpecialDefense = pokemon.Stats.SpecialDefense,
+            SpecialDefence = pokemon.Stats.SpecialDefence,
             Hp = pokemon.Stats.Hp,
             Type1 = pokemon.Type.Type1.ToString(),
             Type2 = pokemon.Type.Type2?.ToString(),
             ChineseName = pokemon.ChineseName,
             EnglishName = pokemon.EnglishName,
             FrenchName = pokemon.FrenchName,
-            JapaneseName = pokemon.JapaneseName
+            JapaneseName = pokemon.JapaneseName,
         };
     }
-    
+
     public static UserEntity ToEntity(this User runtimeObj)
     {
         return new UserEntity
