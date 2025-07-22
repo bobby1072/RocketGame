@@ -8,10 +8,44 @@ namespace PokeGame.Core.Persistence.Entities;
 [Table("pokedex", Schema = "public")]
 public sealed class PokedexPokemonEntity: BaseEntity<int, PokedexPokemon>
 {
-    public required PokedexPokemonRawJson PokemonJson { get; init; }
-
+    public required string EnglishName { get; set; }
+    public required string JapaneseName { get; set; }
+    public required string ChineseName { get; set; }
+    public required string FrenchName { get; set; }
+    [Column(name: "type_one")]
+    public required string Type1 { get; set; }
+    [Column(name: "type_two")]
+    public string? Type2 { get; set; }
+    public required int Hp { get; set; }
+    public required int Attack { get; set; }
+    public required int Defense { get; set; }
+    public required int SpecialAttack { get; set; }
+    public required int SpecialDefense { get; set; }
+    public required int Speed { get; set; }
+    
     public override PokedexPokemon ToModel()
     {
-        return PokemonJson.ToRuntimeModel();
+        return new PokedexPokemon
+        {
+            Id = Id,
+            EnglishName = EnglishName,
+            ChineseName = ChineseName,
+            FrenchName = FrenchName,
+            Type = new PokedexPokemonType
+            {
+                Type1 = Enum.Parse<PokemonType>(Type1),
+                Type2 = Type2 is null ? null : Enum.Parse<PokemonType>(Type2),
+            },
+            Stats = new PokedexPokemonStats
+            {
+                Attack = Attack,
+                Defense = Defense,
+                Speed = Speed,
+                Hp = Hp,
+                SpecialAttack = SpecialAttack,
+                SpecialDefense = SpecialDefense,
+            },
+            JapaneseName = JapaneseName
+        };
     }
 }

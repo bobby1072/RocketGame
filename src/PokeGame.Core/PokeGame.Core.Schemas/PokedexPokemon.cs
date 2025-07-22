@@ -19,32 +19,4 @@ public sealed class PokedexPokemon: PersistableDomainModel<PokedexPokemon, int>
                other.Type.Equals(Type) &&
                other.Stats.Equals(Stats);
     }
-
-
-
-    public PokedexPokemonRawJson ToJsonType()
-    {
-        var typeArray = new List<string>
-        {
-            Type.Type1.ToString()
-        };
-
-        if (Type.Type2 is not null)
-        {
-            typeArray.Add(Type.Type2.ToString()!);
-        }
-        return new PokedexPokemonRawJson
-        {
-            Id = Id,
-            Base = Stats.ToJson(),
-            Name = new PokedexPokemonNameRawJson
-            {
-                English = EnglishName,
-                Chinese = ChineseName,
-                French = FrenchName,
-                Japanese = JapaneseName
-            },
-            Type = typeArray,
-        };
-    }
 }
