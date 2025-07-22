@@ -7,6 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Content Include="Migrations\Sql\*.sql">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Remove="Migrations\Sql\*.sql" />
+      <EmbeddedResource Include="Migrations\Sql\*.sql" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\..\Submodules\BT\src\BT.Common\BT.Common.Persistence.Shared\BT.Common.Persistence.Shared.csproj" />
       <ProjectReference Include="..\..\Submodules\BT\src\BT.Common\BT.Common.Polly\BT.Common.Polly.csproj" />
       <ProjectReference Include="..\PokeGame.Core.Common\PokeGame.Core.Common.csproj" />
