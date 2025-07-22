@@ -17,10 +17,20 @@ try
     builder.Services
         .AddLogging(opts =>
         {
-            opts.AddJsonConsole(ctx =>
+            if (builder.Environment.IsDevelopment())
             {
-                ctx.IncludeScopes = true;
-            });
+                opts.AddSimpleConsole(ctx =>
+                {
+                    ctx.IncludeScopes = true;
+                });
+            }
+            else
+            {
+                opts.AddJsonConsole(ctx =>
+                {
+                    ctx.IncludeScopes = true;
+                });
+            }
         });
     
     builder.Services

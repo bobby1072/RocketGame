@@ -5,15 +5,15 @@ namespace PokeGame.Core.Schemas;
 public sealed record PokedexPokemonStatsRawJson
 {
     [JsonPropertyName("HP")]
-    public required int Hp { get; set; }
+    public int Hp { get; init; }
     [JsonPropertyName("Attack")]
-    public required int Attack { get; set; }
+    public int Attack { get; init; }
     [JsonPropertyName("Defense")]
-    public required int Defense { get; set; }
+    public int Defense { get; init; }
     [JsonPropertyName("Sp. Attack")]
-    public required int SpecialAttack { get; set; }
-    [JsonPropertyName("Sp. Defence")]
-    public required int SpecialDefense { get; set; }
+    public int SpecialAttack { get; init; }
+    [JsonPropertyName("Sp. Defense")]
+    public int SpecialDefense { get; init; }
     [JsonPropertyName("Speed")]
-    public required int Speed { get; set; }
+    public int Speed { get; init; }
 }

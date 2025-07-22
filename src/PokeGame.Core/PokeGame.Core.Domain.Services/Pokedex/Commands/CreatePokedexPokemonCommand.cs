@@ -1,4 +1,5 @@
-﻿using BT.Common.Persistence.Shared.Utils;
+﻿using BT.Common.FastArray.Proto;
+using BT.Common.Persistence.Shared.Utils;
 using Microsoft.Extensions.Logging;
 using PokeGame.Core.Common.Exceptions;
 using PokeGame.Core.Domain.Services.Abstract;
@@ -28,8 +29,19 @@ internal sealed class CreatePokedexPokemonCommand: IDomainCommand<IReadOnlyColle
         
         _logger.LogDebug("Pokedex pokemon records to be created: {@CreationArray}", input);
 
+        var existingPokedex = await EntityFrameworkUtils.TryDbOperation(() => _pokedexPokemonRepository.GetAll(), _logger) ?? throw new PokeGameApiServerException("Failed to get existing pokedex count");
+
+        var pokemonToCreate = input.FastArrayWhere(x => !existingPokedex.Data.Any(y => y.Equals(x))).ToArray();
+
+        if (pokemonToCreate.Length == 0)
+        {
+            _logger.LogWarning("None of the new entries are unique so no pokedex pokemon records to created.");
+
+            return [];
+        }
+        
         var saveResult = await
-            EntityFrameworkUtils.TryDbOperation(() => _pokedexPokemonRepository.Create(input), _logger)
+            EntityFrameworkUtils.TryDbOperation(() => _pokedexPokemonRepository.Create(pokemonToCreate), _logger)
                 ?? throw new PokeGameApiServerException("Failed to create pokedex pokemon");
 
         if (saveResult.IsSuccessful != true || saveResult.Data.Count == 0)

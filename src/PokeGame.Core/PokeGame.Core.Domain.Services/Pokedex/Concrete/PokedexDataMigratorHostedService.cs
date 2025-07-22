@@ -50,27 +50,28 @@ internal sealed class PokedexDataMigratorHostedService : BackgroundService
 
         _logger.LogInformation("Database migration completed. Starting Pokedex data seeding...");
 
-        try
-        {
-            await SeedPokedexDataAsync(stoppingToken);
-            _logger.LogInformation("Pokedex data seeding completed successfully");
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error occurred while seeding Pokedex data");
-            throw;
-        }
+        await SeedPokedexDataAsync(stoppingToken);
+        _logger.LogInformation("Pokedex data seeding completed successfully");
     }
 
     private async Task SeedPokedexDataAsync(CancellationToken cancellationToken)
     {
+        PokedexPokemon[] pokedexPokemonList;
+        try
+        {
+            pokedexPokemonList = _pokedexJsonFile
+                .Deserialize<PokedexPokemonRawJson[]>()
+                ?.FastArraySelect(x => x.ToRuntimeModel())
+                .ToArray() ?? [];
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error occurred while seeding Pokedex data");
+
+            throw;
+        }
         await using var scope = _serviceProvider.CreateAsyncScope();
         var commandExecutor = scope.ServiceProvider.GetRequiredService<IDomainServiceCommandExecutor>();
-
-        var pokedexPokemonList = _pokedexJsonFile
-            .Deserialize<IReadOnlyCollection<PokedexPokemonRawJson>>()
-            ?.FastArraySelect(x => x.ToRuntimeModel())
-            .ToArray() ?? [];
         
         if (pokedexPokemonList.Length > 0)
         {
