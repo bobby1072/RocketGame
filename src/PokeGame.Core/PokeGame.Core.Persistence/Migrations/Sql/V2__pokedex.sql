@@ -8,8 +8,8 @@ CREATE TABLE public."pokedex"(
     type_two TEXT,
     hp INTEGER NOT NULL,
     attack INTEGER NOT NULL,
-    defense INTEGER NOT NULL,
+    defence INTEGER NOT NULL,
     special_attack INTEGER NOT NULL,
-    special_defense INTEGER NOT NULL,
+    special_defence INTEGER NOT NULL,
     speed INTEGER NOT NULL
 );

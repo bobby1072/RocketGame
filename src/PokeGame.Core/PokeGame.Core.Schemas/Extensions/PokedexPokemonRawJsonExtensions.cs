@@ -8,7 +8,7 @@ public static class PokedexPokemonRawJsonExtensions
     {
         var foundFirstType = pokedexPokemonRawJson.Type.FastArrayFirstOrDefault();
         var foundSecondType = pokedexPokemonRawJson.Type.FastArraySecondOrDefault();
-        
+
         return new PokedexPokemon
         {
             Id = pokedexPokemonRawJson.Id,
@@ -19,23 +19,26 @@ public static class PokedexPokemonRawJsonExtensions
             Stats = pokedexPokemonRawJson.Base.ToRuntimeModel(),
             Type = new PokedexPokemonType
             {
-                Type1 = foundFirstType is null ? PokemonType.None : Enum.Parse<PokemonType>(foundFirstType),
+                Type1 = foundFirstType is null
+                    ? PokemonType.None
+                    : Enum.Parse<PokemonType>(foundFirstType),
                 Type2 = foundSecondType is null ? null : Enum.Parse<PokemonType>(foundSecondType),
-            }
+            },
         };
     }
-    
-    
-    public static PokedexPokemonStats ToRuntimeModel(this PokedexPokemonStatsRawJson pokedexPokemonStatsRawJson)
+
+    public static PokedexPokemonStats ToRuntimeModel(
+        this PokedexPokemonStatsRawJson pokedexPokemonStatsRawJson
+    )
     {
         return new PokedexPokemonStats
         {
             Hp = pokedexPokemonStatsRawJson.Hp,
             Attack = pokedexPokemonStatsRawJson.Attack,
-            Defense = pokedexPokemonStatsRawJson.Defense,
+            Defence = pokedexPokemonStatsRawJson.Defence,
             Speed = pokedexPokemonStatsRawJson.Speed,
             SpecialAttack = pokedexPokemonStatsRawJson.SpecialAttack,
-            SpecialDefense = pokedexPokemonStatsRawJson.SpecialDefense,
+            SpecialDefence = pokedexPokemonStatsRawJson.SpecialDefence,
         };
     }
 }
