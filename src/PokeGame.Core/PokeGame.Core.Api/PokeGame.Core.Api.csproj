@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Submodules\BT\src\BT.Common\BT.Common.Api.Helpers\BT.Common.Api.Helpers.csproj" />
     <ProjectReference Include="..\..\Submodules\BT\src\BT.Common\BT.Common.Helpers\BT.Common.Helpers.csproj" />
     <ProjectReference Include="..\PokeGame.Core.Common\PokeGame.Core.Common.csproj" />
     <ProjectReference Include="..\PokeGame.Core.Domain.Services\PokeGame.Core.Domain.Services.csproj" />
