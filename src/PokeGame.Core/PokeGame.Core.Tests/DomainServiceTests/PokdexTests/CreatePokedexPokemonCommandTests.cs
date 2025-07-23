@@ -6,7 +6,7 @@ using PokeGame.Core.Domain.Services.Pokedex.Commands;
 using PokeGame.Core.Persistence.Repositories.Abstract;
 using PokeGame.Core.Schemas;
 
-namespace PokeGame.Core.Domain.Services.Tests.PokdexTests;
+namespace PokeGame.Core.Tests.DomainServiceTests.PokdexTests;
 
 public sealed class CreatePokedexPokemonCommandTests
 {
@@ -61,7 +61,6 @@ public sealed class CreatePokedexPokemonCommandTests
     {
         public ExecuteAsync_Should_Create_Only_New_Pokemon_ClassData()
         {
-            var random = new Random();
             var originalPokemon = _fixture
                 .CreateMany<PokedexPokemon>()
                 .ToArray();

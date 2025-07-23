@@ -2,4 +2,4 @@
 
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("PokeGame.Core.Domain.Services.Tests")]
+[assembly: InternalsVisibleTo("PokeGame.Core.Tests")]
