@@ -10,7 +10,7 @@ namespace PokeGame.Core.Domain.Services.Tests.PokdexTests;
 
 public sealed class CreatePokedexPokemonCommandTests
 {
-    private readonly Fixture _fixture = new();
+    private static readonly Fixture _fixture = new();
     private readonly Mock<IPokedexPokemonRepository> _mockPokedexPokemonRepository = new();
     private readonly CreatePokedexPokemonCommand _command;
 
@@ -21,26 +21,60 @@ public sealed class CreatePokedexPokemonCommandTests
             new NullLogger<CreatePokedexPokemonCommand>()
         );
     }
-
-    [Fact]
-    public async Task ExecuteAsync_Should_Create_Only_New_Pokemon()
+    [Theory]
+    [ClassData(typeof(ExecuteAsync_Should_Create_Only_New_Pokemon_ClassData))]
+    public async Task ExecuteAsync_Should_Create_Only_New_Pokemon(
+        IReadOnlyCollection<PokedexPokemon> existingPokemon, 
+        IReadOnlyCollection<PokedexPokemon> input,
+        IReadOnlyCollection<PokedexPokemon> expected,
+        bool shouldHaveCalledCreateDbMethod)
     {
         //Arrange
-        var originalPokemon = 
-            _fixture
-                .CreateMany<PokedexPokemon>().ToArray();
-        
         _mockPokedexPokemonRepository
             .Setup(x => x.GetAll())
-            .ReturnsAsync(new DbGetManyResult<PokedexPokemon>(originalPokemon));
+            .ReturnsAsync(new DbGetManyResult<PokedexPokemon>(existingPokemon));
+
+        if (shouldHaveCalledCreateDbMethod)
+        {
+            _mockPokedexPokemonRepository
+                .Setup(x => x.Create(It.IsAny<IReadOnlyCollection<PokedexPokemon>>()))
+                .ReturnsAsync(new DbSaveResult<PokedexPokemon>(expected));
+        }
         
         //Act
-        var result = await _command.ExecuteAsync(originalPokemon);
+        var result = await _command.ExecuteAsync(input);
         
         //Assert
-        Assert.Equal([], result);
-        
         _mockPokedexPokemonRepository.Verify(x => x.GetAll(), Times.Once);
-        _mockPokedexPokemonRepository.VerifyNoOtherCalls();
+        
+        if (!shouldHaveCalledCreateDbMethod)
+        {
+            Assert.Equal(expected, result);
+        }
+        else
+        {
+            _mockPokedexPokemonRepository.Verify(x => x.Create(expected), Times.Once);
+        }
+    }
+    private sealed class ExecuteAsync_Should_Create_Only_New_Pokemon_ClassData : TheoryData<
+        IReadOnlyCollection<PokedexPokemon>, IReadOnlyCollection<PokedexPokemon>, IReadOnlyCollection<PokedexPokemon>, bool>
+    {
+        public ExecuteAsync_Should_Create_Only_New_Pokemon_ClassData()
+        {
+            var random = new Random();
+            var originalPokemon = _fixture
+                .Build<PokedexPokemon>()
+                .With(x => x.Id, random.Next(0, int.MaxValue))
+                .CreateMany()
+                .ToArray();
+            var newPokemon = _fixture
+                .Build<PokedexPokemon>()
+                .With(x => x.Id, random.Next(0, int.MaxValue))
+                .CreateMany()
+                .ToArray();
+            Add(originalPokemon, originalPokemon, [], false);
+            Add(originalPokemon, [], [], false);
+            Add(originalPokemon, originalPokemon.Union(newPokemon).ToArray(), newPokemon, true);
+        }
     }
 }
