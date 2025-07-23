@@ -63,14 +63,10 @@ public sealed class CreatePokedexPokemonCommandTests
         {
             var random = new Random();
             var originalPokemon = _fixture
-                .Build<PokedexPokemon>()
-                .With(x => x.Id, random.Next(0, int.MaxValue))
-                .CreateMany()
+                .CreateMany<PokedexPokemon>()
                 .ToArray();
             var newPokemon = _fixture
-                .Build<PokedexPokemon>()
-                .With(x => x.Id, random.Next(0, int.MaxValue))
-                .CreateMany()
+                .CreateMany<PokedexPokemon>()
                 .ToArray();
             Add(originalPokemon, originalPokemon, [], false);
             Add(originalPokemon, [], [], false);
