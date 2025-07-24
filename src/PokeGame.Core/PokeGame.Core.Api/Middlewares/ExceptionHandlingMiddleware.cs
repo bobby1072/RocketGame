@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using System.Net.Mime;
-using PokeGame.Core.Api.Models;
+using BT.Common.Api.Helpers.Models;
 using PokeGame.Core.Common;
 using PokeGame.Core.Common.Exceptions;
 

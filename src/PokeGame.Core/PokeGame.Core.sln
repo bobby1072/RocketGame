@@ -33,7 +33,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeGame.Core.Aspire", "Pok
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E9125AD7-F72B-49AF-A6DA-4D69D0465F2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeGame.Core.Domain.Services.Tests", "PokeGame.Core.Domain.Services.Tests\PokeGame.Core.Domain.Services.Tests.csproj", "{64F1D581-15DA-4B44-A74A-137375F924D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeGame.Core.Tests", "PokeGame.Core.Tests\PokeGame.Core.Tests.csproj", "{64F1D581-15DA-4B44-A74A-137375F924D4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BT.Common.Api.Helpers", "..\Submodules\BT\src\BT.Common\BT.Common.Api.Helpers\BT.Common.Api.Helpers.csproj", "{E560F3A9-D978-45A0-96A2-8991F7B3BEAB}"
 EndProject

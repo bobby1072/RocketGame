@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BT.Common.Api.Helpers.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PokeGame.Core.Api.Models;
-using PokeGame.Core.Common;
 using PokeGame.Core.Common.Configurations;
 
 namespace PokeGame.Core.Api.Controllers;

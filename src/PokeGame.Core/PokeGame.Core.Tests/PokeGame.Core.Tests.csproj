@@ -32,4 +32,8 @@
       <ProjectReference Include="..\PokeGame.Core.Domain.Services\PokeGame.Core.Domain.Services.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="DomainServiceTests\" />
+    </ItemGroup>
+
 </Project>

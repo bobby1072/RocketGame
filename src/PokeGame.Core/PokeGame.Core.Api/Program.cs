@@ -1,4 +1,5 @@
 using System.Text.Json;
+using BT.Common.Api.Helpers.Extensions;
 using BT.Common.Api.Helpers.Midddlewares;
 using BT.Common.Helpers;
 using PokeGame.Core.Api.Middlewares;
@@ -62,7 +63,7 @@ try
 
     app
         .UseMiddleware<ExceptionHandlingMiddleware>()
-        .UseMiddleware<CorrelationIdMiddleware>();
+        .UseCorrelationIdMiddleware();
     
     app.MapControllers();
 
