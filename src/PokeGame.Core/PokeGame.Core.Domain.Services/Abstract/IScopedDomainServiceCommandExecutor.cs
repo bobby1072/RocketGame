@@ -1,7 +1,7 @@
 ﻿
 namespace PokeGame.Core.Domain.Services.Abstract;
 
-internal interface IDomainServiceCommandExecutor
+internal interface IScopedDomainServiceCommandExecutor
 {
     Task RunCommandAsync<TCommand, TInput>(TInput input) where TCommand : IDomainCommand<TInput>;
 

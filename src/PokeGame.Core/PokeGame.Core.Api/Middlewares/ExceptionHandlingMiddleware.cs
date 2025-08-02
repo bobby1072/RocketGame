@@ -39,13 +39,13 @@ internal sealed class ExceptionHandlingMiddleware
                     nameof(PokeGameApiServerException),
                     exception.StatusCode);
 
-                await SendExceptionResponseAsync(context, ExceptionConstants.InternalError, (int)exception.StatusCode);
+                await SendExceptionResponseAsync(context, Constants.ExceptionConstants.InternalError, (int)exception.StatusCode);
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "Unhandled exception occured during request");
 
-                await SendExceptionResponseAsync(context, ExceptionConstants.InternalError,
+                await SendExceptionResponseAsync(context, Constants.ExceptionConstants.InternalError,
                     (int)HttpStatusCode.InternalServerError);
             }
         }

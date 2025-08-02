@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PokeGame.Core.Common.Configurations;
+using PokeGame.Core.Schemas.Output;
 
 namespace PokeGame.Core.Api.Controllers;
 
@@ -21,11 +22,17 @@ public sealed class HealthController: ControllerBase
 
 
     [HttpGet]
-    public Task<ActionResult<WebOutcome<ServiceInfo>>> Health()
+    public Task<ActionResult<WebOutcome<HealthResponse>>> Health()
     {
         _logger.LogInformation("Service appears healthy...");
         
-        return Task.FromResult((ActionResult<WebOutcome<ServiceInfo>>)new WebOutcome<ServiceInfo>
-            { Data = _serviceInfo });
+        return Task.FromResult((ActionResult<WebOutcome<HealthResponse>>)new WebOutcome<HealthResponse>
+        {
+            Data = new HealthResponse
+            {
+                ServiceInfo = _serviceInfo,
+            },
+            
+        });
     }
 }

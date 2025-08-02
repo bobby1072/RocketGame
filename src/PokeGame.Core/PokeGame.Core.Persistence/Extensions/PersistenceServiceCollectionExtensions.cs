@@ -22,7 +22,7 @@ public static class PersistenceServiceCollectionExtensions
         var migrationConfigSection = configuration.GetSection(DbMigrationSettings.Key);
         if (!migrationConfigSection.Exists())
         {
-            throw new InvalidDataException(ExceptionConstants.MissingEnvVars);
+            throw new InvalidDataException(Constants.ExceptionConstants.MissingEnvVars);
         }
 
         services

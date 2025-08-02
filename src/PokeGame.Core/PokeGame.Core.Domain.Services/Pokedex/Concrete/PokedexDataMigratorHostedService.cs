@@ -14,18 +14,18 @@ namespace PokeGame.Core.Domain.Services.Pokedex.Concrete;
 
 internal sealed class PokedexDataMigratorHostedService : BackgroundService
 {
-    private readonly IServiceProvider _serviceProvider;
+    private readonly IServiceScopeFactory _scopeFactory;
     private readonly IDatabaseMigratorHealthCheck _databaseMigratorHealthCheck;
     private readonly JsonDocument _pokedexJsonFile;
     private readonly ILogger<PokedexDataMigratorHostedService> _logger;
 
     public PokedexDataMigratorHostedService(
-        IServiceProvider serviceProvider,
+        IServiceScopeFactory scopeFactory,
         IDatabaseMigratorHealthCheck databaseMigratorHealthCheck,
-        [FromKeyedServices(ServiceKeys.PokedexJsonFile)] JsonDocument pokedexJsonFile,
+        [FromKeyedServices(Constants.ServiceKeys.PokedexJsonFile)] JsonDocument pokedexJsonFile,
         ILogger<PokedexDataMigratorHostedService> logger)
     {
-        _serviceProvider = serviceProvider;
+        _scopeFactory = scopeFactory;
         _databaseMigratorHealthCheck = databaseMigratorHealthCheck;
         _pokedexJsonFile = pokedexJsonFile;
         _logger = logger;
@@ -70,8 +70,8 @@ internal sealed class PokedexDataMigratorHostedService : BackgroundService
 
             throw;
         }
-        await using var scope = _serviceProvider.CreateAsyncScope();
-        var commandExecutor = scope.ServiceProvider.GetRequiredService<IDomainServiceCommandExecutor>();
+        await using var scope = _scopeFactory.CreateAsyncScope();
+        var commandExecutor = scope.ServiceProvider.GetRequiredService<IScopedDomainServiceCommandExecutor>();
         
         if (pokedexPokemonList.Length > 0)
         {
