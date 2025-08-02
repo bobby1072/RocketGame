@@ -12,7 +12,7 @@ public static class CommonServiceCollectionExtensions
         
         
         services
-            .AddKeyedSingleton(ServiceKeys.PokedexJsonFile, pokedexJson);
+            .AddKeyedSingleton(Constants.ServiceKeys.PokedexJsonFile, pokedexJson);
         
 
         return services;
