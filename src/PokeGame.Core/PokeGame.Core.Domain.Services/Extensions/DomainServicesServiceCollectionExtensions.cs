@@ -41,9 +41,10 @@ public static class DomainServicesServiceCollectionExtensions
             .AddPokedexJson();
         
         services
-            .AddScoped<IScopedDomainServiceCommandExecutor, ScopedScopedDomainServiceCommandExecutor>()
             .AddScoped<CreatePokedexPokemonCommand>()
             .AddScoped<SaveUserCommand>()
+            .AddScoped<GetUserByEmailCommand>()
+            .AddScoped<IScopedDomainServiceCommandExecutor, ScopedDomainServiceCommandExecutor>()
             .AddScoped<IUserProcessingManager, UserProcessingManager>()
             .AddHostedService<PokedexDataMigratorHostedService>();
 

@@ -6,10 +6,8 @@ using PokeGame.Core.Schemas.Output;
 
 namespace PokeGame.Core.Api.Controllers;
 
-[ApiController]
-[Route("Api/[controller]")]
 [AllowAnonymous]
-public sealed class HealthController: ControllerBase
+public sealed class HealthController: BaseController
 {
     private readonly ILogger<HealthController> _logger;
     private readonly ServiceInfo _serviceInfo;
