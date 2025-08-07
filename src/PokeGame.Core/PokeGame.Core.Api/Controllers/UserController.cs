@@ -19,7 +19,11 @@ public sealed class UserController: ControllerBase
         _userProcessingManager = userProcessingManager;
     }
 
-
+    [HttpGet]
+    public Task<ActionResult<WebOutcome<User>>> GetUser(Guid userId)
+    {
+        throw new NotImplementedException();
+    }
     [HttpPost]
     public async Task<ActionResult<WebOutcome<User>>> SaveUser(SaveUserInput input)
     {
