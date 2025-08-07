@@ -16,7 +16,7 @@ internal sealed class UserProcessingManager : IUserProcessingManager
         _logger = logger;
     }
 
-    public Task<Schemas.User> GetUser(string email) => _commandExecutor
+    public Task<Schemas.User> GetUserAsync(string email) => _commandExecutor
         .RunCommandAsync<GetUserByEmailCommand, string, Schemas.User>(email);
     public Task<Schemas.User> SaveUserAsync(SaveUserInput input) => _commandExecutor
         .RunCommandAsync<SaveUserCommand, SaveUserInput, Schemas.User>(input);
