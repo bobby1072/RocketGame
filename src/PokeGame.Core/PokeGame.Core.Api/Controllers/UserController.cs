@@ -7,10 +7,8 @@ using PokeGame.Core.Schemas.Input;
 
 namespace PokeGame.Core.Api.Controllers;
 
-[ApiController]
-[Route("Api/[controller]")]
 [AllowAnonymous]
-public sealed class UserController: ControllerBase
+public sealed class UserController: BaseController
 {
     private readonly IUserProcessingManager _userProcessingManager;
 
@@ -20,22 +18,28 @@ public sealed class UserController: ControllerBase
     }
 
     [HttpGet]
-    public Task<ActionResult<WebOutcome<User>>> GetUser(Guid userId)
+    public async Task<ActionResult<WebOutcome<User>>> GetUser(string email)
     {
-        throw new NotImplementedException();
+        var result = await _userProcessingManager.GetUserAsync(email);
+
+
+        return new WebOutcome<User>
+        {
+            Data = result
+        };
     }
     [HttpPost]
     public async Task<ActionResult<WebOutcome<User>>> SaveUser(SaveUserInput input)
     {
         var result =  await _userProcessingManager.SaveUserAsync(input);
 
-        return Ok(new WebOutcome<User>
+        return new WebOutcome<User>
         {
             Data = result,
             ExtraData = new Dictionary<string, object>
             {
                 {"SaveType", input.Id is null ? "Create": "Update"}
             }
-        });
+        };
     } 
 }
