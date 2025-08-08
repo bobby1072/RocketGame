@@ -1,6 +1,7 @@
 import React from "react";
 import { Alert, Box } from "@mui/material";
 import { FieldErrors } from "react-hook-form";
+import { AxiosError } from "axios";
 
 interface ErrorComponentProps {
     error?: FieldErrors | Error | string | null;
@@ -10,6 +11,17 @@ export const ErrorComponent: React.FC<ErrorComponentProps> = ({ error }) => {
     if (!error) return null;
 
     // Handle Error objects
+    if (error instanceof AxiosError) {
+        return (
+            <Box sx={{ mt: 2 }}>
+                <Alert severity="error">
+                    {error.response?.data.exceptionMessage ||
+                        "An unexpected error occurred"}
+                </Alert>
+            </Box>
+        );
+    }
+
     if (error instanceof Error) {
         return (
             <Box sx={{ mt: 2 }}>
