@@ -66,11 +66,11 @@ internal sealed class ExceptionHandlingMiddleware
 
     private static async Task SendExceptionResponseAsync(HttpContext context, string message, int statusCode)
     {
+        var foundCorrelationId = context.Response.Headers[ApiConstants.CorrelationIdHeader].ToString();
         context.Response.Clear();
         context.Response.ContentType = MediaTypeNames.Application.Json;
         context.Response.StatusCode = statusCode;
 
-        var foundCorrelationId = context.Response.Headers[ApiConstants.CorrelationIdHeader];
 
         if (!string.IsNullOrEmpty(foundCorrelationId))
         {
