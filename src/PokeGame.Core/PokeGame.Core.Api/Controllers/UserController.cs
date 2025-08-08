@@ -17,7 +17,7 @@ public sealed class UserController: BaseController
         _userProcessingManager = userProcessingManager;
     }
 
-    [HttpGet]
+    [HttpGet("GetUser")]
     public async Task<ActionResult<WebOutcome<User>>> GetUser(string email)
     {
         var result = await _userProcessingManager.GetUserAsync(email);
@@ -28,7 +28,7 @@ public sealed class UserController: BaseController
             Data = result
         };
     }
-    [HttpPost]
+    [HttpPost("SaveUser")]
     public async Task<ActionResult<WebOutcome<User>>> SaveUser(SaveUserInput input)
     {
         var result =  await _userProcessingManager.SaveUserAsync(input);

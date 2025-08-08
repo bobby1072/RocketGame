@@ -10,7 +10,7 @@ export type AppSettings = {
     [K in keyof typeof AppSettingsKeys]: string;
 };
 
-export default class AppSettingsProvider {
+export default abstract class AppSettingsProvider {
     public static GetAllAppSettings(): AppSettings {
         return Object.entries(AppSettingsKeys).reduce(
             (acc, [key, val]) => ({
