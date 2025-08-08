@@ -10,7 +10,7 @@ export const useGetPokeGameHttpClientContext = () => {
     const value = useContext(PokeGameCoreHttpClientContext);
 
     if (!value) {
-        throw new Error("No settings registered");
+        throw new Error("No http client registered");
     }
 
     return value;

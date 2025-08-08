@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
     Container,
     Paper,
@@ -15,6 +18,7 @@ import { PokeGameUser } from "../../models/PokeGameUser";
 import { SaveUserInput } from "../../models/SaveUserInput";
 import { useGetUserMutation } from "../hooks/useGetUserMutation";
 import { useSaveUserMutation } from "../hooks/useSaveUserMutation";
+import { ErrorComponent } from "../components/ErrorComponent";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -38,88 +42,105 @@ function TabPanel(props: TabPanelProps) {
     );
 }
 
+// Zod schemas
+const loginSchema = z.object({
+    email: z
+        .string()
+        .email("Please enter a valid email address")
+        .min(1, "Email is required"),
+});
+
+const registerSchema = z.object({
+    email: z
+        .string()
+        .email("Please enter a valid email address")
+        .min(1, "Email is required"),
+    name: z
+        .string()
+        .min(1, "Name is required")
+        .min(2, "Name must be at least 2 characters"),
+});
+
+export type LoginInput = z.infer<typeof loginSchema>;
+export type RegisterInput = z.infer<typeof registerSchema>;
+
 export const LoginPage: React.FC<{
     setUser: (user: PokeGameUser) => void;
 }> = ({ setUser }) => {
     const [tabValue, setTabValue] = useState(0);
-    const [email, setEmail] = useState("");
-    const [name, setName] = useState("");
-    const [error, setError] = useState<string | null>(null);
-    const [success, setSuccess] = useState<string | null>(null);
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
     const getUserMutation = useGetUserMutation();
     const saveUserMutation = useSaveUserMutation();
+
+    // Login form
+    const {
+        register: loginRegister,
+        handleSubmit: handleLoginSubmit,
+        formState: { errors: loginErrors, isDirty: loginIsDirty },
+        reset: loginReset,
+    } = useForm<LoginInput>({
+        resolver: zodResolver(loginSchema),
+        defaultValues: { email: "" },
+    });
+
+    // Register form
+    const {
+        register: registerRegister,
+        handleSubmit: handleRegisterSubmit,
+        formState: { errors: registerErrors, isDirty: registerIsDirty },
+        reset: registerReset,
+    } = useForm<RegisterInput>({
+        resolver: zodResolver(registerSchema),
+        defaultValues: { email: "", name: "" },
+    });
 
     const handleTabChange = (
         _event: React.SyntheticEvent,
         newValue: number
     ) => {
         setTabValue(newValue);
-        setError(null);
-        setSuccess(null);
-        setEmail("");
-        setName("");
+        setSuccessMessage(null);
+        loginReset();
+        registerReset();
+        getUserMutation.reset();
+        saveUserMutation.reset();
     };
 
-    const handleLogin = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setError(null);
-        setSuccess(null);
-
-        if (!email.trim()) {
-            setError("Email is required");
-            return;
+    // Handle successful login
+    useEffect(() => {
+        if (getUserMutation.data) {
+            setSuccessMessage("Login successful!");
+            setUser(getUserMutation.data);
         }
+    }, [getUserMutation.data, setUser]);
 
-        try {
-            const user = await getUserMutation.mutateAsync({
-                email: email.trim(),
-            });
-            if (user) {
-                setSuccess("Login successful!");
-                setUser(user);
-            } else {
-                setError(
-                    "User not found. Please check your email or register a new account."
-                );
-            }
-        } catch (err) {
-            setError("Login failed. Please try again.");
-        }
-    };
-
-    const handleRegister = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setError(null);
-        setSuccess(null);
-
-        if (!email.trim()) {
-            setError("Email is required");
-            return;
-        }
-
-        if (!name.trim()) {
-            setError("Name is required");
-            return;
-        }
-
-        try {
-            const userInput: SaveUserInput = {
-                email: email.trim(),
-                name: name.trim(),
-            };
-
-            const user = await saveUserMutation.mutateAsync({ userInput });
-            setSuccess("Registration successful! You are now logged in.");
-            setUser(user);
-        } catch (err) {
-            setError(
-                "Registration failed. This email might already be in use."
+    // Handle successful registration
+    useEffect(() => {
+        if (saveUserMutation.data) {
+            setSuccessMessage(
+                "Registration successful! You are now logged in."
             );
+            setUser(saveUserMutation.data);
         }
+    }, [saveUserMutation.data, setUser]);
+
+    const onLoginSubmit = (data: LoginInput) => {
+        setSuccessMessage(null);
+        getUserMutation.mutate({ email: data.email });
     };
 
-    const isLoading = getUserMutation.isPending || saveUserMutation.isPending;
+    const onRegisterSubmit = (data: RegisterInput) => {
+        setSuccessMessage(null);
+        const userInput: SaveUserInput = {
+            email: data.email,
+            name: data.name,
+        };
+        saveUserMutation.mutate({ userInput });
+    };
+
+    const isLoginLoading = getUserMutation.isPending;
+    const isRegisterLoading = saveUserMutation.isPending;
 
     return (
         <Container maxWidth="sm" sx={{ mt: 8 }}>
@@ -154,28 +175,29 @@ export const LoginPage: React.FC<{
                 </Box>
 
                 <TabPanel value={tabValue} index={0}>
-                    <Box component="form" onSubmit={handleLogin} sx={{ mt: 2 }}>
+                    <Box
+                        component="form"
+                        onSubmit={handleLoginSubmit(onLoginSubmit)}
+                        sx={{ mt: 2 }}
+                    >
                         <TextField
                             fullWidth
                             label="Email"
                             type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            {...loginRegister("email")}
                             margin="normal"
-                            required
-                            disabled={isLoading}
+                            disabled={isLoginLoading}
                             autoComplete="email"
+                            error={!!loginErrors.email}
+                            helperText={loginErrors.email?.message}
                         />
 
-                        {error && (
-                            <Alert severity="error" sx={{ mt: 2 }}>
-                                {error}
-                            </Alert>
-                        )}
+                        <ErrorComponent error={loginErrors} />
+                        <ErrorComponent error={getUserMutation.error} />
 
-                        {success && (
+                        {successMessage && (
                             <Alert severity="success" sx={{ mt: 2 }}>
-                                {success}
+                                {successMessage}
                             </Alert>
                         )}
 
@@ -184,9 +206,9 @@ export const LoginPage: React.FC<{
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
-                            disabled={isLoading}
+                            disabled={!loginIsDirty || isLoginLoading}
                         >
-                            {isLoading ? (
+                            {isLoginLoading ? (
                                 <CircularProgress size={24} />
                             ) : (
                                 "Login"
@@ -198,42 +220,39 @@ export const LoginPage: React.FC<{
                 <TabPanel value={tabValue} index={1}>
                     <Box
                         component="form"
-                        onSubmit={handleRegister}
+                        onSubmit={handleRegisterSubmit(onRegisterSubmit)}
                         sx={{ mt: 2 }}
                     >
                         <TextField
                             fullWidth
                             label="Email"
                             type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            {...registerRegister("email")}
                             margin="normal"
-                            required
-                            disabled={isLoading}
+                            disabled={isRegisterLoading}
                             autoComplete="email"
+                            error={!!registerErrors.email}
+                            helperText={registerErrors.email?.message}
                         />
 
                         <TextField
                             fullWidth
                             label="Name"
                             type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            {...registerRegister("name")}
                             margin="normal"
-                            required
-                            disabled={isLoading}
+                            disabled={isRegisterLoading}
                             autoComplete="name"
+                            error={!!registerErrors.name}
+                            helperText={registerErrors.name?.message}
                         />
 
-                        {error && (
-                            <Alert severity="error" sx={{ mt: 2 }}>
-                                {error}
-                            </Alert>
-                        )}
+                        <ErrorComponent error={registerErrors} />
+                        <ErrorComponent error={saveUserMutation.error} />
 
-                        {success && (
+                        {successMessage && (
                             <Alert severity="success" sx={{ mt: 2 }}>
-                                {success}
+                                {successMessage}
                             </Alert>
                         )}
 
@@ -242,9 +261,9 @@ export const LoginPage: React.FC<{
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
-                            disabled={isLoading}
+                            disabled={!registerIsDirty || isRegisterLoading}
                         >
-                            {isLoading ? (
+                            {isRegisterLoading ? (
                                 <CircularProgress size={24} />
                             ) : (
                                 "Register"

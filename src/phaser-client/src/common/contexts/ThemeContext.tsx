@@ -51,7 +51,7 @@ const ThemeContext = createContext<Theme>(darkTheme);
 export const useTheme = (): Theme => {
     const context = useContext(ThemeContext);
     if (!context) {
-        throw new Error("useTheme must be used within a PokeGameThemeProvider");
+        throw new Error("No theme registered");
     }
     return context;
 };
