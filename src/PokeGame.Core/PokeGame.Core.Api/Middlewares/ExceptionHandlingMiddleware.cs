@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Mime;
+using BT.Common.Api.Helpers;
 using BT.Common.Api.Helpers.Models;
 using BT.Common.OperationTimer.Common;
 using PokeGame.Core.Common;
@@ -68,6 +69,14 @@ internal sealed class ExceptionHandlingMiddleware
         context.Response.Clear();
         context.Response.ContentType = MediaTypeNames.Application.Json;
         context.Response.StatusCode = statusCode;
+
+        var foundCorrelationId = context.Response.Headers[ApiConstants.CorrelationIdHeader];
+
+        if (!string.IsNullOrEmpty(foundCorrelationId))
+        {
+            context.Response.Headers.TryAdd(ApiConstants.CorrelationIdHeader, foundCorrelationId);
+        }
+        
         await context.Response.WriteAsJsonAsync(new WebOutcome { ExceptionMessage = message });
     }
 }
