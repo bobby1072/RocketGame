@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Mime;
 using BT.Common.Api.Helpers.Models;
+using BT.Common.OperationTimer.Common;
 using PokeGame.Core.Common;
 using PokeGame.Core.Common.Exceptions;
 
@@ -21,7 +22,14 @@ internal sealed class ExceptionHandlingMiddleware
         {
             try
             {
-                await _next.Invoke(context);
+                try
+                {
+                    await _next.Invoke(context);
+                }
+                catch (OperationTimerException ex)
+                {
+                    throw ex.InnerException ?? ex;
+                }
             }
             catch (PokeGameApiUserException exception)
             {

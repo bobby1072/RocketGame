@@ -1,4 +1,4 @@
-const appSettingsJson: Record<string, any> = require("appsettings.json");
+import appSettingsJson from "./appsettings.json";
 
 enum AppSettingsKeys {
     serviceName = "serviceName",
