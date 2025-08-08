@@ -15,8 +15,22 @@ export default class PokeGameCoreHttpClient {
         input: SaveUserInput
     ): Promise<PokeGameUser | null | undefined> {
         const { data } = await this._axiosClient.post<WebOutcome<PokeGameUser>>(
-            "Api/User/SaveUser",
+            "Api/User/Save",
             input
+        );
+
+        if (!data.isSuccess) {
+            throw new Error(data.exceptionMessage || "Error occurred");
+        }
+
+        return data.data;
+    }
+
+    public async GetUser(
+        email: string
+    ): Promise<PokeGameUser | null | undefined> {
+        const { data } = await this._axiosClient.get<WebOutcome<PokeGameUser>>(
+            `Api/User/Get?email=${email}`
         );
 
         if (!data.isSuccess) {

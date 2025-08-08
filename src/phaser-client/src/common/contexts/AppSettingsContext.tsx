@@ -3,7 +3,7 @@ import AppSettingsProvider, { AppSettings } from "../utils/AppSettingsProvider";
 
 const AppSettingsContext = createContext<AppSettings | undefined>(undefined);
 
-export const useGetAppSettings = () => {
+export const useGetAppSettingsContext = () => {
     const value = useContext(AppSettingsContext);
 
     if (!value) {
